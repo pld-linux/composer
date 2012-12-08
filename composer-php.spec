@@ -5,7 +5,7 @@
 %define		pkgname	composer
 %define		php_min_version 5.3.4
 %define		subver	alpha6
-%define		rel		0.4
+%define		rel		0.5
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		%{pkgname}-php
@@ -61,7 +61,7 @@ COMPOSER_VERSION=%{version}%{?subver:-%{subver}} \
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_appdir}}
-cp -a bin src vendor $RPM_BUILD_ROOT%{_appdir}
+cp -a bin src res vendor $RPM_BUILD_ROOT%{_appdir}
 ln -s %{_appdir}/bin/%{pkgname} $RPM_BUILD_ROOT%{_bindir}/%{pkgname}
 
 %clean
@@ -74,5 +74,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_appdir}
 %dir %{_appdir}/bin
 %attr(755,root,root) %{_appdir}/bin/*
-%{_appdir}/vendor
+%{_appdir}/res
 %{_appdir}/src
+%{_appdir}/vendor
