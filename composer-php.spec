@@ -31,6 +31,7 @@ Requires:	php(phar)
 Suggests:	git-core
 Suggests:	mercurial
 Suggests:	php(openssl)
+Suggests:	php(zip)
 Suggests:	subversion
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
