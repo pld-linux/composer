@@ -16,7 +16,7 @@ Group:		Development/Languages/PHP
 Source0:	https://github.com/composer/composer/archive/%{version}-%{subver}.tar.gz
 # Source0-md5:	bb5ad93089d09a1e58cfaf28fb5c2ab4
 Source1:	http://getcomposer.org/download/%{version}-%{subver}/%{pkgname}.phar
-# Source1-md5:	77ab6fa1a2b50539e935c826f9df27fb
+# Source1-md5:	f9b1dbd4ad0e3707bfe216690b210a7e
 Patch0:		nogit.patch
 URL:		http://www.getcomposer.org/
 BuildRequires:	/usr/bin/php
