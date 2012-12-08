@@ -5,7 +5,7 @@
 %define		pkgname	composer
 %define		php_min_version 5.3.4
 %define		subver	alpha6
-%define		rel		0.2
+%define		rel		0.4
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		%{pkgname}-php
@@ -27,7 +27,6 @@ BuildRequires:	rpmbuild(macros) >= 1.461
 BuildRequires:	%{name}
 %endif
 Requires:	php(core) >= %{php_min_version}
-Requires:	php(phar)
 Suggests:	git-core
 Suggests:	mercurial
 Suggests:	php(openssl)
@@ -35,6 +34,8 @@ Suggests:	php(zip)
 Suggests:	subversion
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		_appdir		%{_datadir}/%{pkgname}
 
 %description
 Composer is a tool for dependency management in PHP. It allows you to
@@ -44,6 +45,8 @@ them in your project for you.
 %prep
 %setup -q -n %{pkgname}-%{version}%{?subver:-%{subver}}
 %patch0 -p1
+
+%{__sed} -i -e '1s,^#!.*env php,#!%{__php},' bin/*
 
 %build
 %if %{with bootstrap}
@@ -57,8 +60,9 @@ COMPOSER_VERSION=%{version}%{?subver:-%{subver}} \
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_bindir}
-cp -p %{pkgname}.phar $RPM_BUILD_ROOT%{_bindir}/%{pkgname}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_appdir}}
+cp -a bin src vendor $RPM_BUILD_ROOT%{_appdir}
+ln -s %{_appdir}/bin/%{pkgname} $RPM_BUILD_ROOT%{_bindir}/%{pkgname}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -67,3 +71,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README.md CHANGELOG.md LICENSE PORTING_INFO
 %attr(755,root,root) %{_bindir}/composer
+%dir %{_appdir}
+%dir %{_appdir}/bin
+%attr(755,root,root) %{_appdir}/bin/*
+%{_appdir}/vendor
+%{_appdir}/src
