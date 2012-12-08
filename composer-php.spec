@@ -16,7 +16,10 @@ BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.461
 Requires:	php(core) >= %{php_min_version}
 Requires:	php(phar)
+Suggests:	git-core
+Suggests:	mercurial
 Suggests:	php(openssl)
+Suggests:	subversion
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
