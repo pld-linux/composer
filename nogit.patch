@@ -1,32 +1,19 @@
---- composer-1.0.0-alpha6/src/Composer/Compiler.php~	2012-10-23 11:54:25.000000000 +0300
-+++ composer-1.0.0-alpha6/src/Composer/Compiler.php	2012-12-08 03:44:08.842614626 +0200
-@@ -35,16 +35,20 @@
+--- composer-alpha7/src/Composer/Compiler.php~	2013-04-01 13:18:27.000000000 +0300
++++ composer-alpha7/src/Composer/Compiler.php	2013-04-01 22:27:27.313555304 +0300
+@@ -35,6 +35,8 @@
              unlink($pharFile);
          }
  
--        $process = new Process('git log --pretty="%h" -n1 HEAD', __DIR__);
--        if ($process->run() != 0) {
--            throw new \RuntimeException('Can\'t run git log. You must ensure to run compile from composer git repository clone and that git binary is available.');
--        }
--        $this->version = trim($process->getOutput());
 +		$this->version = getenv('COMPOSER_VERSION');
- 
--        $process = new Process('git describe --tags HEAD');
--        if ($process->run() == 0) {
--            $this->version = trim($process->getOutput());
--        }
-+		if (empty($this->version)) {
-+			$process = new Process('git log --pretty="%h" -n1 HEAD', __DIR__);
-+			if ($process->run() != 0) {
-+				throw new \RuntimeException('Can\'t run git log. You must ensure to run compile from composer git repository clone and that git binary is available.');
-+			}
-+			$this->version = trim($process->getOutput());
-+
-+			$process = new Process('git describe --tags HEAD');
-+			if ($process->run() == 0) {
-+				$this->version = trim($process->getOutput());
-+			}
-+		}
++	if (empty($this->version)) {
+         $process = new Process('git log --pretty="%H" -n1 HEAD', __DIR__);
+         if ($process->run() != 0) {
+             throw new \RuntimeException('Can\'t run git log. You must ensure to run compile from composer git repository clone and that git binary is available.');
+@@ -45,6 +47,7 @@
+         if ($process->run() == 0) {
+             $this->version = trim($process->getOutput());
+         }
++	}
  
          $phar = new \Phar($pharFile, 0, 'composer.phar');
          $phar->setSignatureAlgorithm(\Phar::SHA1);

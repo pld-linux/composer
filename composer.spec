@@ -4,7 +4,7 @@
 
 %define		php_min_version 5.3.4
 %define		subver	alpha7
-%define		rel		0.6
+%define		rel		0.7
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
@@ -48,7 +48,7 @@ them in your project for you.
 
 %prep
 %setup -q -n %{name}-master
-#%patch0 -p1
+%patch0 -p1
 
 %{__sed} -i -e '1s,^#!.*env php,#!%{__php},' bin/*
 
