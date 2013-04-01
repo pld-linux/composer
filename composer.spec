@@ -1,10 +1,13 @@
 #
+# NOTE
+# - release tarballs: http://getcomposer.org/download/
+
 # Conditional build:
 %bcond_with	bootstrap		# build boostrap
 
 %define		php_min_version 5.3.4
 %define		subver	alpha7
-%define		rel		0.7
+%define		rel		0.13
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
@@ -13,11 +16,13 @@ Release:	0.%{subver}.%{rel}
 License:	MIT
 Group:		Development/Languages/PHP
 #Source0:	https://github.com/composer/composer/archive/%{version}-%{subver}.tar.gz
-Source0:	https://github.com/composer/composer/archive/master.tar.gz?/%{name}.tgz
-# Source0-md5:	0a4a4b06740a9b49d2ab9773a907aa94
+Source0:	http://github.com/composer/composer/tarball/master?/%{name}.tgz
+# Source0-md5:	661b31437f47e3ff23e616ab3fb21831
 Source1:	http://getcomposer.org/download/%{version}-%{subver}/%{name}.phar
 # Source1-md5:	f9b1dbd4ad0e3707bfe216690b210a7e
 Patch0:		nogit.patch
+Patch1:		no-bundle-symfony.patch
+Patch2:		system-symfony.patch
 URL:		http://www.getcomposer.org/
 BuildRequires:	/usr/bin/php
 BuildRequires:	php(ctype)
@@ -31,6 +36,9 @@ BuildRequires:	rpmbuild(macros) >= 1.461
 BuildRequires:	%{name}
 %endif
 Requires:	php(core) >= %{php_min_version}
+Requires:	php-symfony2-Console >= 2.1
+Requires:	php-symfony2-Finder >= 2.1
+Requires:	php-symfony2-Process >= 2.1
 Suggests:	git-core
 Suggests:	mercurial
 Suggests:	php(openssl)
@@ -47,25 +55,39 @@ declare the dependent libraries your project needs and it will install
 them in your project for you.
 
 %prep
-%setup -q -n %{name}-master
+%setup -qc
+mv composer-composer-*/* .
 %patch0 -p1
+%patch1 -p1
 
 %{__sed} -i -e '1s,^#!.*env php,#!%{__php},' bin/*
 
 %build
 %if %{with bootstrap}
-env -i PATH=$PATH \
-%{__php} %{SOURCE1} install --prefer-dist -v
+composer='env -i PATH="$PATH" %{__php} %{SOURCE1}'
 %else
-composer install --prefer-dist -v
+composer=composer
 %endif
+if [ ! -d vendor ]; then
+	$composer install --prefer-dist -v
+	%{__patch} -p1 < %{PATCH2}
+fi
 
-COMPOSER_VERSION=%{version}%{?subver:-%{subver}} \
+V=$(echo composer-composer-*)
+V=${V#composer-composer-}
+COMPOSER_VERSION=%{version}%{?subver:-%{subver}}${V:+-g$V} \
 %{__php} -d phar.readonly=0 ./bin/compile
+
+# sanity check
+%{__php} composer.phar --version
+
+install -d build
+%{__php} -r '$phar = new Phar($argv[1]); $phar->extractTo($argv[2]);' composer.phar build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_appdir}}
+cd build
 cp -a bin src res vendor $RPM_BUILD_ROOT%{_appdir}
 ln -s %{_appdir}/bin/%{name} $RPM_BUILD_ROOT%{_bindir}/%{name}
 
