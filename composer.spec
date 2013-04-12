@@ -7,7 +7,7 @@
 
 %define		php_min_version 5.3.4
 %define		subver	alpha7
-%define		rel		0.13
+%define		rel		0.14
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
@@ -30,6 +30,7 @@ BuildRequires:	php(hash)
 BuildRequires:	php(json)
 BuildRequires:	php(openssl)
 BuildRequires:	php(phar)
+BuildRequires:	php(zip)
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.461
 %if %{without bootstrap}
@@ -60,15 +61,17 @@ mv composer-composer-*/* .
 %patch0 -p1
 %patch1 -p1
 
+mv composer.lock{,.disabled}
 %{__sed} -i -e '1s,^#!.*env php,#!%{__php},' bin/*
 
 %build
 %if %{with bootstrap}
-composer='env -i PATH="$PATH" %{__php} %{SOURCE1}'
+composer='%{__php} %{SOURCE1}'
 %else
 composer=composer
 %endif
 if [ ! -d vendor ]; then
+	COMPOSER_HOME=${PWD:=$(pwd)} \
 	$composer install --prefer-dist -v
 	%{__patch} -p1 < %{PATCH2}
 fi
