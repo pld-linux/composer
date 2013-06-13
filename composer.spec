@@ -7,7 +7,7 @@
 
 %define		php_min_version 5.3.4
 %define		subver	alpha7
-%define		rel		0.14
+%define		rel		0.16
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
@@ -37,6 +37,7 @@ BuildRequires:	rpmbuild(macros) >= 1.461
 BuildRequires:	%{name}
 %endif
 Requires:	php(core) >= %{php_min_version}
+Requires:	php(phar)
 Requires:	php-symfony2-Console >= 2.1
 Requires:	php-symfony2-Finder >= 2.1
 Requires:	php-symfony2-Process >= 2.1
