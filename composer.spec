@@ -37,6 +37,7 @@ BuildRequires:	rpmbuild(macros) >= 1.461
 BuildRequires:	%{name}
 %endif
 Requires:	php(core) >= %{php_min_version}
+Requires:	php(hash)
 Requires:	php(phar)
 Requires:	php-symfony2-Console >= 2.1
 Requires:	php-symfony2-Finder >= 2.1
