@@ -6,9 +6,9 @@
 %bcond_with	bootstrap		# build boostrap
 
 %define		php_min_version 5.3.4
-%define		githash	46e5554
+%define		githash	f134e09
 %define		subver	alpha7
-%define		rel		0.16
+%define		rel		0.17
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
@@ -17,7 +17,7 @@ Release:	0.%{subver}.%{rel}
 License:	MIT
 Group:		Development/Languages/PHP
 Source0:	https://github.com/composer/composer/archive/%{githash}/%{name}-%{version}-%{githash}.tar.gz
-# Source0-md5:	8d3be5df3a0151b87b77806b75cfcf9d
+# Source0-md5:	21a70f5ec468b68429a03551f1ef150e
 Source1:	http://getcomposer.org/download/%{version}-%{subver}/%{name}.phar
 # Source1-md5:	f9b1dbd4ad0e3707bfe216690b210a7e
 Patch0:		nogit.patch
@@ -39,8 +39,8 @@ BuildRequires:	%{name}
 Requires:	php(core) >= %{php_min_version}
 Requires:	php(hash)
 Requires:	php(phar)
-Requires:	php-symfony2-Console >= 2.1
-Requires:	php-symfony2-Finder >= 2.1
+Requires:	php-symfony2-Console >= 2.3
+Requires:	php-symfony2-Finder >= 2.2
 Requires:	php-symfony2-Process >= 2.1
 Suggests:	git-core
 Suggests:	mercurial

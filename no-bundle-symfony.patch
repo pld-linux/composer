@@ -8,15 +8,15 @@
              ->in(__DIR__.'/../../vendor/seld/jsonlint/src/')
              ->in(__DIR__.'/../../vendor/justinrainbow/json-schema/src/')
          ;
---- composer-master/composer.json~	2013-04-01 13:18:27.000000000 +0300
-+++ composer-master/composer.json	2013-04-01 23:47:07.240751219 +0300
+--- composer-1.0.0-0.alpha7.0.17/composer.json~	2013-11-11 15:41:21.000000000 +0200
++++ composer-1.0.0-0.alpha7.0.17/composer.json	2013-11-13 09:38:09.329316303 +0200
 @@ -24,10 +24,7 @@
      "require": {
          "php": ">=5.3.2",
          "justinrainbow/json-schema": "1.1.*",
 -        "seld/jsonlint": "1.*",
--        "symfony/console": "~2.1@dev",
--        "symfony/finder": "~2.1",
+-        "symfony/console": "~2.3",
+-        "symfony/finder": "~2.2",
 -        "symfony/process": "~2.1@dev"
 +        "seld/jsonlint": "1.*"
      },
