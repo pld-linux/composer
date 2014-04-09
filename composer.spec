@@ -6,7 +6,7 @@
 
 %define		php_min_version 5.3.4
 %define		subver	alpha8
-%define		rel		0.22
+%define		rel		1
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
@@ -35,6 +35,8 @@ BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.461
 %if %{without bootstrap}
 BuildRequires:	%{name}
+BuildRequires:	php-symfony2-Console >= 2.3
+BuildRequires:	php-symfony2-Finder >= 2.2
 %endif
 Requires:	php(core) >= %{php_min_version}
 Requires:	php(hash)
@@ -79,7 +81,7 @@ composer=composer
 %endif
 if [ ! -d vendor ]; then
 	COMPOSER_HOME=${PWD:=$(pwd)} \
-	$composer install --prefer-dist -v --no-dev
+	$composer dump-autoload -v
 	%{__patch} -p1 < %{PATCH2}
 fi
 
