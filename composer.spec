@@ -20,6 +20,8 @@ Source0:	https://github.com/composer/composer/archive/%{version}-%{subver}/%{nam
 Source1:	http://getcomposer.org/download/%{version}-%{subver}/%{name}.phar
 # Source1-md5:	df1001975035f07d09307bf1f1e62584
 %endif
+Source2:	https://raw.githubusercontent.com/iArren/%{name}-bash-completion/86a8129/composer
+# Source2-md5:	cdeebf0a0da1fd07d0fd886d0461642e
 Patch0:		nogit.patch
 Patch1:		no-vendors.patch
 Patch2:		autoload-config.patch
@@ -34,7 +36,7 @@ BuildRequires:	php(phar)
 BuildRequires:	php(zip)
 BuildRequires:	php(zlib)
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
-BuildRequires:	rpmbuild(macros) >= 1.461
+BuildRequires:	rpmbuild(macros) >= 1.673
 %if %{without bootstrap}
 BuildRequires:	%{name}
 BuildRequires:	php-symfony2-Console >= 2.3
@@ -64,6 +66,19 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Composer is a tool for dependency management in PHP. It allows you to
 declare the dependent libraries your project needs and it will install
 them in your project for you.
+
+%package -n bash-completion-%{name}
+Summary:	Bash completion for Composer
+Summary(pl.UTF-8):	bashowe uzupełnianie nazw dla Composera
+Group:		Applications/Shells
+Requires:	%{name}
+Requires:	bash-completion >= 2.0
+
+%description -n bash-completion-%{name}
+Bash completion for Composer package and dependency manager.
+
+%description -n bash-completion-%{name} -l pl.UTF-8
+Pakiet ten dostarcza bashowe uzupełnianie nazw dla Composera.
 
 %prep
 %setup -qc -n %{name}-%{version}-%{release}
@@ -103,6 +118,9 @@ cd build
 cp -a bin src res vendor $RPM_BUILD_ROOT%{_appdir}
 ln -s %{_appdir}/bin/%{name} $RPM_BUILD_ROOT%{_bindir}/%{name}
 
+install -d $RPM_BUILD_ROOT%{bash_compdir}
+cp -p %{SOURCE2} $RPM_BUILD_ROOT%{bash_compdir}/composer
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -116,3 +134,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/res
 %{_appdir}/src
 %{_appdir}/vendor
+
+%files -n bash-completion-%{name}
+%defattr(644,root,root,755)
+%{bash_compdir}/composer
