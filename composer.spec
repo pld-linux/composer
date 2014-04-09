@@ -16,8 +16,10 @@ License:	MIT
 Group:		Development/Languages/PHP
 Source0:	https://github.com/composer/composer/archive/%{version}-%{subver}/%{name}-%{version}-%{subver}.tar.gz
 # Source0-md5:	a304aecf48b8406730d572e204afd6db
+%if %{with bootstrap}
 Source1:	http://getcomposer.org/download/%{version}-%{subver}/%{name}.phar
 # Source1-md5:	df1001975035f07d09307bf1f1e62584
+%endif
 Patch0:		nogit.patch
 Patch1:		no-vendors.patch
 Patch2:		autoload-config.patch
