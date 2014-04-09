@@ -1,5 +1,5 @@
---- composer-1.0.0/vendor/composer/autoload_namespaces.php~	2013-04-12 18:41:14.000000000 +0300
-+++ composer-1.0.0/vendor/composer/autoload_namespaces.php	2013-04-12 18:42:10.735493349 +0300
+--- composer-1.0.0-0.alpha8.0.18/vendor/composer/autoload_namespaces.php~	2014-04-09 19:25:49.000000000 +0300
++++ composer-1.0.0-0.alpha8.0.18/vendor/composer/autoload_namespaces.php	2014-04-09 19:27:08.119493444 +0300
 @@ -4,8 +4,12 @@
  
  $vendorDir = dirname(dirname(__FILE__));
@@ -10,6 +10,6 @@
 +    'Symfony\\Component\\Process\\' => $pearDir,
 +    'Symfony\\Component\\Finder' => $pearDir,
 +    'Symfony\\Component\\Console\\' => $pearDir,
-     'Seld\\JsonLint' => $vendorDir . '/seld/jsonlint/src/',
-     'JsonSchema' => $vendorDir . '/justinrainbow/json-schema/src/',
-     'Composer' => $baseDir . '/src/',
+     'Seld\\JsonLint' => array($vendorDir . '/seld/jsonlint/src'),
+     'JsonSchema' => array($vendorDir . '/justinrainbow/json-schema/src'),
+     'Composer' => array($baseDir . '/src'),

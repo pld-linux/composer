@@ -6,9 +6,8 @@
 %bcond_with	bootstrap		# build boostrap
 
 %define		php_min_version 5.3.4
-%define		githash	f134e09
-%define		subver	alpha7
-%define		rel		0.17
+%define		subver	alpha8
+%define		rel		0.19
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
@@ -16,10 +15,10 @@ Version:	1.0.0
 Release:	0.%{subver}.%{rel}
 License:	MIT
 Group:		Development/Languages/PHP
-Source0:	https://github.com/composer/composer/archive/%{githash}/%{name}-%{version}-%{githash}.tar.gz
-# Source0-md5:	21a70f5ec468b68429a03551f1ef150e
+Source0:	https://github.com/composer/composer/archive/%{version}-%{subver}/%{name}-%{version}-%{subver}.tar.gz
+# Source0-md5:	a304aecf48b8406730d572e204afd6db
 Source1:	http://getcomposer.org/download/%{version}-%{subver}/%{name}.phar
-# Source1-md5:	f9b1dbd4ad0e3707bfe216690b210a7e
+# Source1-md5:	df1001975035f07d09307bf1f1e62584
 Patch0:		nogit.patch
 Patch1:		no-bundle-symfony.patch
 Patch2:		system-symfony.patch
@@ -74,13 +73,11 @@ composer=composer
 %endif
 if [ ! -d vendor ]; then
 	COMPOSER_HOME=${PWD:=$(pwd)} \
-	$composer install --prefer-dist -v
+	$composer install --prefer-dist -v --no-dev
 	%{__patch} -p1 < %{PATCH2}
 fi
 
-V=$(echo composer-composer-*)
-V=${V#composer-composer-}
-COMPOSER_VERSION=%{version}%{?subver:-%{subver}}${V:+-g$V} \
+COMPOSER_VERSION=%{version}%{?subver:-%{subver}} \
 %{__php} -d phar.readonly=0 ./bin/compile
 
 # sanity check
