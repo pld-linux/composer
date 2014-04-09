@@ -1,4 +1,3 @@
-#
 # NOTE
 # - release tarballs: http://getcomposer.org/download/
 
@@ -7,7 +6,7 @@
 
 %define		php_min_version 5.3.4
 %define		subver	alpha8
-%define		rel		0.19
+%define		rel		0.22
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
@@ -38,6 +37,8 @@ BuildRequires:	%{name}
 Requires:	php(core) >= %{php_min_version}
 Requires:	php(hash)
 Requires:	php(phar)
+Requires:	php-justinrainbow-json-schema >= 1.1.0
+Requires:	php-seld-jsonlint >= 1.1.2
 Requires:	php-symfony2-Console >= 2.3
 Requires:	php-symfony2-Finder >= 2.2
 Requires:	php-symfony2-Process >= 2.1

@@ -1,15 +1,17 @@
---- composer-1.0.0-0.alpha8.0.18/vendor/composer/autoload_namespaces.php~	2014-04-09 19:25:49.000000000 +0300
-+++ composer-1.0.0-0.alpha8.0.18/vendor/composer/autoload_namespaces.php	2014-04-09 19:27:08.119493444 +0300
-@@ -4,8 +4,12 @@
+--- composer-1.0.0-0.alpha8.0.20/vendor/composer/autoload_namespaces.php~	2014-04-09 20:10:11.000000000 +0300
++++ composer-1.0.0-0.alpha8.0.20/vendor/composer/autoload_namespaces.php	2014-04-09 20:12:08.796194842 +0300
+@@ -4,7 +4,14 @@
  
  $vendorDir = dirname(dirname(__FILE__));
  $baseDir = dirname($vendorDir);
 +$pearDir = PEAR_INSTALL_DIR . '/';
++$phpDir = defined('PHP_DATADIR') ? PHP_DATADIR . '/php/' : '';
  
  return array(
-+    'Symfony\\Component\\Process\\' => $pearDir,
-+    'Symfony\\Component\\Finder' => $pearDir,
-+    'Symfony\\Component\\Console\\' => $pearDir,
-     'Seld\\JsonLint' => array($vendorDir . '/seld/jsonlint/src'),
-     'JsonSchema' => array($vendorDir . '/justinrainbow/json-schema/src'),
++    'Symfony\\Component\\Process\\' => array($pearDir),
++    'Symfony\\Component\\Finder' => array($pearDir),
++    'Symfony\\Component\\Console\\' => array($pearDir),
++    'Seld\\JsonLint' => array($phpDir. '/Seld/JsonLint'),
++    'JsonSchema' => array($phpDir),
      'Composer' => array($baseDir . '/src'),
+ );
