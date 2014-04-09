@@ -22,6 +22,7 @@ Patch0:		nogit.patch
 Patch1:		no-vendors.patch
 Patch2:		autoload-config.patch
 URL:		http://www.getcomposer.org/
+BuildRequires:	/usr/bin/phar
 BuildRequires:	/usr/bin/php
 BuildRequires:	php(ctype)
 BuildRequires:	php(hash)
@@ -29,6 +30,7 @@ BuildRequires:	php(json)
 BuildRequires:	php(openssl)
 BuildRequires:	php(phar)
 BuildRequires:	php(zip)
+BuildRequires:	php(zlib)
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.461
 %if %{without bootstrap}
@@ -37,11 +39,13 @@ BuildRequires:	%{name}
 Requires:	php(core) >= %{php_min_version}
 Requires:	php(hash)
 Requires:	php(phar)
+%if %{without bootstrap}
 Requires:	php-justinrainbow-json-schema >= 1.1.0
 Requires:	php-seld-jsonlint >= 1.1.2
 Requires:	php-symfony2-Console >= 2.3
 Requires:	php-symfony2-Finder >= 2.2
 Requires:	php-symfony2-Process >= 2.1
+%endif
 Suggests:	git-core
 Suggests:	mercurial
 Suggests:	php(openssl)
@@ -61,7 +65,7 @@ them in your project for you.
 %setup -qc -n %{name}-%{version}-%{release}
 mv composer-*/* .
 %patch0 -p1
-%patch1 -p1
+%{!?with_bootstrap:%patch1 -p1}
 
 mv composer.lock{,.disabled}
 %{__sed} -i -e '1s,^#!.*env php,#!%{__php},' bin/*
@@ -69,6 +73,7 @@ mv composer.lock{,.disabled}
 %build
 %if %{with bootstrap}
 composer='%{__php} %{SOURCE1}'
+phar extract -f "%{SOURCE1}" -i vendor .
 %else
 composer=composer
 %endif
