@@ -19,8 +19,8 @@ Source0:	https://github.com/composer/composer/archive/%{version}-%{subver}/%{nam
 Source1:	http://getcomposer.org/download/%{version}-%{subver}/%{name}.phar
 # Source1-md5:	df1001975035f07d09307bf1f1e62584
 Patch0:		nogit.patch
-Patch1:		no-bundle-symfony.patch
-Patch2:		system-symfony.patch
+Patch1:		no-vendors.patch
+Patch2:		autoload-config.patch
 URL:		http://www.getcomposer.org/
 BuildRequires:	/usr/bin/php
 BuildRequires:	php(ctype)
