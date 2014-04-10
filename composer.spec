@@ -52,6 +52,7 @@ Requires:	php-symfony2-Console >= 2.3
 Requires:	php-symfony2-Finder >= 2.2
 Requires:	php-symfony2-Process >= 2.1
 %endif
+Suggests:	bash-completion-%{name}
 Suggests:	git-core
 Suggests:	mercurial
 Suggests:	php(openssl)
