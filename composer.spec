@@ -43,8 +43,15 @@ BuildRequires:	php-symfony2-Console >= 2.3
 BuildRequires:	php-symfony2-Finder >= 2.2
 %endif
 Requires:	php(core) >= %{php_min_version}
+Requires:	php(ctype)
+Requires:	php(date)
+Requires:	php(filter)
 Requires:	php(hash)
+Requires:	php(json)
+Requires:	php(pcre)
 Requires:	php(phar)
+Requires:	php(simplexml)
+Requires:	php(spl)
 %if %{without bootstrap}
 Requires:	php-justinrainbow-json-schema >= 1.1.0
 Requires:	php-seld-jsonlint >= 1.1.2
