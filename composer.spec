@@ -118,6 +118,7 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_appdir}}
 cd build
 cp -a bin src res vendor $RPM_BUILD_ROOT%{_appdir}
 ln -s %{_appdir}/bin/%{name} $RPM_BUILD_ROOT%{_bindir}/%{name}
+chmod +x $RPM_BUILD_ROOT%{_appdir}/bin/*
 
 install -d $RPM_BUILD_ROOT%{bash_compdir}
 cp -p %{SOURCE2} $RPM_BUILD_ROOT%{bash_compdir}/composer
