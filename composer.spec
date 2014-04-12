@@ -48,10 +48,12 @@ Requires:	php(date)
 Requires:	php(filter)
 Requires:	php(hash)
 Requires:	php(json)
+Requires:	php(openssl)
 Requires:	php(pcre)
 Requires:	php(phar)
 Requires:	php(simplexml)
 Requires:	php(spl)
+Requires:	php(zip)
 %if %{without bootstrap}
 Requires:	php-justinrainbow-json-schema >= 1.1.0
 Requires:	php-seld-jsonlint >= 1.1.2
@@ -62,8 +64,6 @@ Requires:	php-symfony2-Process >= 2.1
 Suggests:	bash-completion-%{name}
 Suggests:	git-core
 Suggests:	mercurial
-Suggests:	php(openssl)
-Suggests:	php(zip)
 Suggests:	subversion
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
