@@ -11,7 +11,7 @@
 +    'Symfony\\Component\\Process\\' => array($pearDir),
 +    'Symfony\\Component\\Finder' => array($pearDir),
 +    'Symfony\\Component\\Console\\' => array($pearDir),
-+    'Seld\\JsonLint' => array($phpDir. '/Seld/JsonLint'),
++    'Seld\\JsonLint' => array($phpDir),
 +    'JsonSchema' => array($phpDir),
      'Composer' => array($baseDir . '/src'),
  );
