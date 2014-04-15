@@ -6,7 +6,7 @@
 
 %define		php_min_version 5.3.4
 %define		subver	alpha8
-%define		rel		1
+%define		rel		2
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
