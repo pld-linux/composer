@@ -28,15 +28,16 @@ Patch0:		nogit.patch
 Patch1:		no-vendors.patch
 Patch2:		autoload-config.patch
 URL:		http://www.getcomposer.org/
+BuildRequires:	%{php_name}-ctype
+BuildRequires:	%{php_name}-hash
+BuildRequires:	%{php_name}-json
+BuildRequires:	%{php_name}-openssl
+BuildRequires:	%{php_name}-phar
+BuildRequires:	%{php_name}-program
+BuildRequires:	%{php_name}-zip
+BuildRequires:	%{php_name}-zlib
 BuildRequires:	/usr/bin/phar
 BuildRequires:	/usr/bin/php
-BuildRequires:	php(ctype)
-BuildRequires:	php(hash)
-BuildRequires:	php(json)
-BuildRequires:	php(openssl)
-BuildRequires:	php(phar)
-BuildRequires:	php(zip)
-BuildRequires:	php(zlib)
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.673
 %if %{without bootstrap}
@@ -114,7 +115,7 @@ if [ ! -d vendor ]; then
 	%{__patch} -p1 < %{PATCH2}
 fi
 
-COMPOSER_VERSION=%{version}%{?subver:-%{subver}} \
+COMPOSER_VERSION=%{version}%{?subver:-%{subver}}%{?githash:@%{githash}} \
 %{__php} -d phar.readonly=0 ./bin/compile
 
 # sanity check
