@@ -6,16 +6,18 @@
 
 %define		php_min_version 5.3.4
 %define		subver	alpha8
-%define		rel		2
+%define		githash	ac497fe
+%define		rel		3
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
 Version:	1.0.0
-Release:	0.%{subver}.%{rel}
+Release:	0.%{subver}.%{rel}.%{githash}
 License:	MIT
 Group:		Development/Languages/PHP
-Source0:	https://github.com/composer/composer/archive/%{version}-%{subver}/%{name}-%{version}-%{subver}.tar.gz
-# Source0-md5:	a304aecf48b8406730d572e204afd6db
+#Source0:	https://github.com/composer/composer/archive/%{version}-%{subver}/%{name}-%{version}-%{subver}.tar.gz
+Source0:	https://github.com/composer/composer/archive/%{githash}/%{name}-%{version}-%{subver}-%{githash}.tar.gz
+# Source0-md5:	124fe0335a9f61f1ab149d3f8e0616b4
 %if %{with bootstrap}
 Source1:	http://getcomposer.org/download/%{version}-%{subver}/%{name}.phar
 # Source1-md5:	df1001975035f07d09307bf1f1e62584
@@ -72,9 +74,10 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_appdir		%{_datadir}/%{name}
 
 %description
-Composer is a tool for dependency management in PHP. It allows you to
-declare the dependent libraries your project needs and it will install
-them in your project for you.
+Composer is a tool for dependency management in PHP.
+
+Composer helps you declare, manage and install dependencies of PHP
+projects, ensuring you have the right stack everywhere.
 
 %package -n bash-completion-%{name}
 Summary:	Bash completion for Composer
