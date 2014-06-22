@@ -58,6 +58,7 @@ Requires:	php(posix)
 Requires:	php(simplexml)
 Requires:	php(spl)
 Requires:	php(zip)
+Requires:	php(zlib)
 %if %{without bootstrap}
 Requires:	php-justinrainbow-json-schema >= 1.1.0
 Requires:	php-seld-jsonlint >= 1.1.2
