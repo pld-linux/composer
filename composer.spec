@@ -7,7 +7,7 @@
 %define		php_min_version 5.3.4
 %define		subver	alpha8
 %define		githash	ac497fe
-%define		rel		5
+%define		rel		6
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
@@ -27,6 +27,7 @@ Source2:	https://raw.githubusercontent.com/iArren/%{name}-bash-completion/86a812
 Patch0:		nogit.patch
 Patch1:		no-vendors.patch
 Patch2:		autoload-config.patch
+Patch3:		update-memory-limit.patch
 URL:		http://www.getcomposer.org/
 BuildRequires:	%{php_name}-ctype
 BuildRequires:	%{php_name}-hash
@@ -99,6 +100,7 @@ Pakiet ten dostarcza bashowe uzupełnianie nazw dla Composera.
 mv composer-*/* .
 %patch0 -p1
 %{!?with_bootstrap:%patch1 -p1}
+%patch3 -p1
 
 mv composer.lock{,.disabled}
 %{__sed} -i -e '1s,^#!.*env php,#!%{__php},' bin/*
