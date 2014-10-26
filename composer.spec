@@ -6,8 +6,8 @@
 
 %define		php_min_version 5.3.4
 %define		subver	alpha8
-%define		githash	ac497fe
-%define		rel		6
+%define		githash	b0cabd1
+%define		rel		7
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
@@ -17,7 +17,7 @@ License:	MIT
 Group:		Development/Languages/PHP
 #Source0:	https://github.com/composer/composer/archive/%{version}-%{subver}/%{name}-%{version}-%{subver}.tar.gz
 Source0:	https://github.com/composer/composer/archive/%{githash}/%{name}-%{version}-%{subver}-%{githash}.tar.gz
-# Source0-md5:	124fe0335a9f61f1ab149d3f8e0616b4
+# Source0-md5:	be1b3e138647d0ed8af94a53de53c9c0
 %if %{with bootstrap}
 Source1:	http://getcomposer.org/download/%{version}-%{subver}/%{name}.phar
 # Source1-md5:	df1001975035f07d09307bf1f1e62584
