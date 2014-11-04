@@ -7,7 +7,7 @@
 %define		php_min_version 5.3.4
 %define		subver	alpha8
 %define		githash	b0cabd1
-%define		rel		7
+%define		rel		8
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
@@ -129,7 +129,7 @@ install -d build
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_appdir}}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_appdir},/var/cache/composer}
 cd build
 cp -a bin src res vendor $RPM_BUILD_ROOT%{_appdir}
 ln -s %{_appdir}/bin/%{name} $RPM_BUILD_ROOT%{_bindir}/%{name}
@@ -151,6 +151,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/res
 %{_appdir}/src
 %{_appdir}/vendor
+
+# top level cachedir, create user cache dirs here manually
+%dir %attr(711,root,http) /var/cache/composer
 
 %files -n bash-completion-%{name}
 %defattr(644,root,root,755)
