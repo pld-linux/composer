@@ -1,19 +1,27 @@
---- composer-alpha7/src/Composer/Compiler.php~	2013-04-01 13:18:27.000000000 +0300
-+++ composer-alpha7/src/Composer/Compiler.php	2013-04-01 22:27:27.313555304 +0300
-@@ -35,6 +35,8 @@
+--- composer-1.0.x-b23a3cd/src/Composer/Compiler.php~	2014-11-28 15:47:34.000000000 +0200
++++ composer-1.0.x-b23a3cd/src/Composer/Compiler.php	2014-11-28 15:53:21.829773210 +0200
+@@ -40,13 +40,13 @@
              unlink($pharFile);
          }
  
-+		$this->version = getenv('COMPOSER_VERSION');
-+	if (empty($this->version)) {
-         $process = new Process('git log --pretty="%H" -n1 HEAD', __DIR__);
+-        $process = new Process('git log --pretty="%H" -n1 HEAD', __DIR__);
++        $process = new Process('echo $PACKAGE_VERSION', __DIR__);
          if ($process->run() != 0) {
              throw new \RuntimeException('Can\'t run git log. You must ensure to run compile from composer git repository clone and that git binary is available.');
-@@ -45,6 +47,7 @@
+         }
+         $this->version = trim($process->getOutput());
+ 
+-        $process = new Process('git log -n1 --pretty=%ci HEAD', __DIR__);
++        $process = new Process('echo $RELEASE_DATE', __DIR__);
+         if ($process->run() != 0) {
+             throw new \RuntimeException('Can\'t run git log. You must ensure to run compile from composer git repository clone and that git binary is available.');
+         }
+@@ -55,7 +55,7 @@
+         $date->setTimezone(new \DateTimeZone('UTC'));
+         $this->versionDate = $date->format('Y-m-d H:i:s');
+ 
+-        $process = new Process('git describe --tags HEAD');
++        $process = new Process('false');
          if ($process->run() == 0) {
              $this->version = trim($process->getOutput());
-         }
-+	}
- 
-         $phar = new \Phar($pharFile, 0, 'composer.phar');
-         $phar->setSignatureAlgorithm(\Phar::SHA1);
+         } else {
