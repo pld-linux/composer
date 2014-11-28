@@ -103,6 +103,9 @@ mv composer-*/* .
 mv composer.lock{,.disabled}
 %{__sed} -i -e '1s,^#!.*env php,#!%{__php},' bin/*
 
+# cleanup backups after patching
+find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
+
 %build
 %if %{with bootstrap}
 composer='%{__php} %{SOURCE1}'
