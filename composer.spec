@@ -4,18 +4,20 @@
 # Conditional build:
 %bcond_with	bootstrap		# build boostrap
 
+%define		rel		10
+#define		githash	b23a3cd
+%define		subver	alpha9
 %define		php_min_version 5.3.4
-%define		githash	b23a3cd
-%define		rel		9
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
 Version:	1.0.0
-Release:	%{rel}.%{githash}
+Release:	%{rel}.%{subver}
 License:	MIT
 Group:		Development/Languages/PHP
-Source0:	https://github.com/composer/composer/archive/%{githash}/%{name}-%{version}-%{githash}.tar.gz
-# Source0-md5:	d9e1c78c6032ebf50ed0b068f2af15ce
+#Source0:       https://github.com/composer/composer/archive/%{githash}/%{name}-%{version}-%{githash}.tar.gz
+Source0:	https://github.com/composer/composer/archive/%{version}-%{subver}/%{name}-%{version}-%{subver}.tar.gz
+# Source0-md5:	f5d0fb132995263ee2783f9e9521acbc
 %if %{with bootstrap}
 Source1:	http://getcomposer.org/download/%{version}-alpha8/%{name}.phar
 # Source1-md5:	df1001975035f07d09307bf1f1e62584
@@ -119,8 +121,9 @@ if [ ! -d vendor ]; then
 	%{__patch} -p1 < %{PATCH2}
 fi
 
-PACKAGE_VERSION=%{?githash} \
 RELEASE_DATE=$(LC_ALL=C date) \
+PACKAGE_VERSION=%{?!githash:%{version}-%{subver}}%{?githash} \
+DEV_VERSION=%{!?githash:0}%{?githash:1} \
 %{__php} -d phar.readonly=0 ./bin/compile
 
 # sanity check

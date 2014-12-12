@@ -21,7 +21,7 @@
          $this->versionDate = $date->format('Y-m-d H:i:s');
  
 -        $process = new Process('git describe --tags HEAD');
-+        $process = new Process('false');
++        $process = new Process('echo $PACKAGE_VERSION; exit $DEV_VERSION');
          if ($process->run() == 0) {
              $this->version = trim($process->getOutput());
          } else {
