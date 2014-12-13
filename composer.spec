@@ -39,6 +39,7 @@ BuildRequires:	%{php_name}-zip
 BuildRequires:	%{php_name}-zlib
 BuildRequires:	/usr/bin/phar
 BuildRequires:	/usr/bin/php
+BuildRequires:	php-devel
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.673
 %if %{without bootstrap}
