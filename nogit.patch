@@ -1,5 +1,5 @@
---- composer-1.0.x-b23a3cd/src/Composer/Compiler.php~	2014-11-28 15:47:34.000000000 +0200
-+++ composer-1.0.x-b23a3cd/src/Composer/Compiler.php	2014-11-28 15:53:21.829773210 +0200
+--- composer-1.0.x-5744981/src/Composer/Compiler.php~	2015-02-18 00:33:55.000000000 +0200
++++ composer-1.0.x-5744981/src/Composer/Compiler.php	2015-02-18 00:34:38.952650516 +0200
 @@ -40,13 +40,13 @@
              unlink($pharFile);
          }
@@ -20,7 +20,7 @@
          $date->setTimezone(new \DateTimeZone('UTC'));
          $this->versionDate = $date->format('Y-m-d H:i:s');
  
--        $process = new Process('git describe --tags HEAD');
+-        $process = new Process('git describe --tags --exact-match HEAD');
 +        $process = new Process('echo $PACKAGE_VERSION; exit $DEV_VERSION');
          if ($process->run() == 0) {
              $this->version = trim($process->getOutput());
