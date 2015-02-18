@@ -4,7 +4,7 @@
 # Conditional build:
 %bcond_with	bootstrap		# build boostrap
 
-%define		rel		11
+%define		rel		12
 # $ git rev-list 1.0.0-alpha9..%{githash} --count
 %define		commits	216
 %define		githash	5744981
@@ -64,7 +64,7 @@ Requires:	php(spl)
 Requires:	php(zip)
 Requires:	php(zlib)
 %if %{without bootstrap}
-Requires:	php-justinrainbow-json-schema >= 1.1.0
+Requires:	php-justinrainbow-json-schema >= 1.3
 Requires:	php-seld-jsonlint >= 1.1.2
 Requires:	php-symfony2-Console >= 2.3
 Requires:	php-symfony2-Finder >= 2.2
