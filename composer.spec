@@ -4,22 +4,22 @@
 # Conditional build:
 %bcond_with	bootstrap		# build boostrap
 
-%define		rel		12
-# $ git rev-list 1.0.0-alpha9..%{githash} --count
-%define		commits	216
-%define		githash	5744981
-%define		subver	alpha9
+%define		rel		13
+# $ git rev-list 1.0.0-alpha10..%{githash} --count
+#define		githash	5744981
+#define		commits	216
+%define		subver	alpha10
 %define		php_min_version 5.3.4
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
 Version:	1.0.0
-Release:	%{rel}.%{subver}.%{commits}.g%{githash}
+Release:	%{rel}.%{subver}%{?commits:.%{commits}}%{?githash:.g%{githash}}
 License:	MIT
 Group:		Development/Languages/PHP
-Source0:       https://github.com/composer/composer/archive/%{githash}/%{name}-%{version}-%{subver}-%{commits}-g%{githash}.tar.gz
-# Source0-md5:	d3152cbae030fedb85f5d1ac52dddd4f
-#Source0:	https://github.com/composer/composer/archive/%{version}-%{subver}/%{name}-%{version}-%{subver}.tar.gz
+#Source0:       https://github.com/composer/composer/archive/%{githash}/%{name}-%{version}-%{subver}-%{commits}-g%{githash}.tar.gz
+Source0:	https://github.com/composer/composer/archive/%{version}-%{subver}/%{name}-%{version}-%{subver}.tar.gz
+# Source0-md5:	e821eec53cbb98871b4cccfc82a6bae7
 %if %{with bootstrap}
 Source1:	http://getcomposer.org/download/%{version}-alpha8/%{name}.phar
 # Source1-md5:	df1001975035f07d09307bf1f1e62584
@@ -64,9 +64,9 @@ Requires:	php(spl)
 Requires:	php(zip)
 Requires:	php(zlib)
 %if %{without bootstrap}
-Requires:	php-justinrainbow-json-schema >= 1.3
+Requires:	php-justinrainbow-json-schema >= 1.4
 Requires:	php-seld-jsonlint >= 1.1.2
-Requires:	php-symfony2-Console >= 2.3
+Requires:	php-symfony2-Console >= 2.5
 Requires:	php-symfony2-Finder >= 2.2
 Requires:	php-symfony2-Process >= 2.1
 %endif
