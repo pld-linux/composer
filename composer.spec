@@ -32,6 +32,7 @@ Patch2:		autoload-config.patch
 Patch3:		update-memory-limit.patch
 URL:		http://www.getcomposer.org/
 BuildRequires:	%{php_name}-ctype
+BuildRequires:	%{php_name}-filter
 BuildRequires:	%{php_name}-hash
 BuildRequires:	%{php_name}-json
 BuildRequires:	%{php_name}-openssl
