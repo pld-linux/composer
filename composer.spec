@@ -5,8 +5,8 @@
 %bcond_with	bootstrap		# build boostrap
 
 %define		rel		13
-# $ git rev-list 1.0.0-alpha10..%{githash} --count
 #define		githash	5744981
+# $ git rev-list 1.0.0-alpha10..%{githash} --count
 #define		commits	216
 %define		subver	alpha10
 %define		php_min_version 5.3.4
