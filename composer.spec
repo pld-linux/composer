@@ -31,17 +31,16 @@ Patch1:		no-vendors.patch
 Patch2:		autoload-config.patch
 Patch3:		update-memory-limit.patch
 URL:		http://www.getcomposer.org/
+BuildRequires:	%{php_name}-cli
 BuildRequires:	%{php_name}-ctype
 BuildRequires:	%{php_name}-filter
 BuildRequires:	%{php_name}-hash
 BuildRequires:	%{php_name}-json
 BuildRequires:	%{php_name}-openssl
 BuildRequires:	%{php_name}-phar
-BuildRequires:	%{php_name}-program
 BuildRequires:	%{php_name}-zip
 BuildRequires:	%{php_name}-zlib
 BuildRequires:	/usr/bin/phar
-BuildRequires:	/usr/bin/php
 BuildRequires:	php-devel
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.673
@@ -107,7 +106,8 @@ mv composer-*/* .
 %patch3 -p1
 
 mv composer.lock{,.disabled}
-%{__sed} -i -e '1s,^#!.*env php,#!%{__php},' bin/*
+# NOTE: do not use %{__php} macro here, need unversioned php binary
+%{__sed} -i -e '1s,^#!.*env php,#!/usr/bin/php,' bin/*
 
 # cleanup backups after patching
 find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
