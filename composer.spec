@@ -4,7 +4,7 @@
 # Conditional build:
 %bcond_with	bootstrap		# build boostrap
 
-%define		rel		13
+%define		rel		14
 #define		githash	5744981
 # $ git rev-list 1.0.0-alpha10..%{githash} --count
 #define		commits	216
@@ -30,6 +30,7 @@ Patch0:		nogit.patch
 Patch1:		no-vendors.patch
 Patch2:		autoload-config.patch
 Patch3:		update-memory-limit.patch
+Patch4:		svn-ignore-externals.patch
 URL:		http://www.getcomposer.org/
 BuildRequires:	%{php_name}-cli
 BuildRequires:	%{php_name}-ctype
@@ -104,6 +105,7 @@ mv composer-*/* .
 %patch0 -p1
 %{!?with_bootstrap:%patch1 -p1}
 %patch3 -p1
+%patch4 -p1
 
 mv composer.lock{,.disabled}
 # NOTE: do not use %{__php} macro here, need unversioned php binary
