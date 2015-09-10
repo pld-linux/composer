@@ -1,11 +1,11 @@
---- composer-1.0.0-13.alpha10/src/Composer/Downloader/SvnDownloader.php~	2015-04-15 00:18:51.000000000 +0300
-+++ composer-1.0.0-13.alpha10/src/Composer/Downloader/SvnDownloader.php	2015-09-02 21:37:14.936187207 +0300
-@@ -156,7 +156,7 @@
-             $fromRevision = preg_replace('{.*@(\d+)$}', '$1', $fromReference);
-             $toRevision = preg_replace('{.*@(\d+)$}', '$1', $toReference);
+--- composer-1.0.0-13.2.alpha10/src/Composer/Downloader/SvnDownloader.php~	2015-04-15 00:18:51.000000000 +0300
++++ composer-1.0.0-13.2.alpha10/src/Composer/Downloader/SvnDownloader.php	2015-09-10 14:13:15.385644261 +0300
+@@ -30,7 +30,7 @@
+         $ref = $package->getSourceReference();
  
--            $command = sprintf('svn log -r%s:%s --incremental', $fromRevision, $toRevision);
-+            $command = sprintf('svn log -r%s:%s --incremental --ignore-externals', $fromRevision, $toRevision);
+         $this->io->writeError("    Checking out ".$package->getSourceReference());
+-        $this->execute($url, "svn co", sprintf("%s/%s", $url, $ref), null, $path);
++        $this->execute($url, "svn co --ignore-externals", sprintf("%s/%s", $url, $ref), null, $path);
+     }
  
-             if (0 !== $this->process->execute($command, $output, $path)) {
-                 throw new \RuntimeException(
+     /**
