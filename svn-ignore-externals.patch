@@ -9,3 +9,12 @@
      }
  
      /**
+@@ -53,7 +53,7 @@
+         }
+ 
+         $this->io->writeError("    Checking out " . $ref);
+-        $this->execute($url, "svn switch" . $flags, sprintf("%s/%s", $url, $ref), $path);
++        $this->execute($url, "svn switch --ignore-externals" . $flags, sprintf("%s/%s", $url, $ref), $path);
+     }
+ 
+     /**
