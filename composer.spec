@@ -20,12 +20,9 @@ Source0:	https://github.com/composer/composer/archive/%{version}-%{subver}/%{nam
 Source2:	https://raw.githubusercontent.com/iArren/%{name}-bash-completion/86a8129/composer
 # Source2-md5:	cdeebf0a0da1fd07d0fd886d0461642e
 Source3:	autoload.php
-Patch0:		nogit.patch
-Patch1:		no-vendors.patch
-Patch2:		autoload-config.patch
-Patch3:		update-memory-limit.patch
-Patch4:		svn-ignore-externals.patch
-Patch10:	autoload.patch
+Patch0:		autoload.patch
+Patch1:		update-memory-limit.patch
+Patch2:		svn-ignore-externals.patch
 URL:		http://www.getcomposer.org/
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.673
@@ -81,7 +78,9 @@ Pakiet ten dostarcza bashowe uzupełnianie nazw dla Composera.
 %prep
 %setup -qc -n %{name}-%{version}-%{release}
 mv composer-*/* .
-%patch10 -p1
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 mv composer.lock{,.disabled}
 # NOTE: do not use %{__php} macro here, need unversioned php binary
