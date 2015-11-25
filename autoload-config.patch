@@ -1,6 +1,6 @@
 --- composer-1.0.0-14.alpha11/vendor/composer/autoload_namespaces.php~	2015-11-25 18:29:26.000000000 +0200
 +++ composer-1.0.0-14.alpha11/vendor/composer/autoload_namespaces.php	2015-11-25 18:29:59.220529712 +0200
-@@ -4,6 +4,15 @@
+@@ -4,6 +4,16 @@
  
  $vendorDir = dirname(dirname(__FILE__));
  $baseDir = dirname($vendorDir);
@@ -14,5 +14,6 @@
 +    'Composer\\Spdx\\' => array($phpDir),
 +    'Composer\\Semver\\' => array($phpDir),
 +    'Seld\\JsonLint' => array($phpDir),
++    'Seld\\PharUtils\\' => array($phpDir),
 +    'JsonSchema' => array($phpDir),
  );
