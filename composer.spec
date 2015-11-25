@@ -1,14 +1,11 @@
 # NOTE
 # - release tarballs: http://getcomposer.org/download/
 
-# Conditional build:
-%bcond_with	bootstrap		# build boostrap
-
 %define		rel		14
 #define		githash	5744981
-# $ git rev-list 1.0.0-alpha10..%{githash} --count
+# $ git rev-list 1.0.0-alpha11..%{githash} --count
 #define		commits	216
-%define		subver	alpha10
+%define		subver	alpha11
 %define		php_min_version 5.3.4
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
@@ -19,37 +16,16 @@ License:	MIT
 Group:		Development/Languages/PHP
 #Source0:       https://github.com/composer/composer/archive/%{githash}/%{name}-%{version}-%{subver}-%{commits}-g%{githash}.tar.gz
 Source0:	https://github.com/composer/composer/archive/%{version}-%{subver}/%{name}-%{version}-%{subver}.tar.gz
-# Source0-md5:	e821eec53cbb98871b4cccfc82a6bae7
-%if %{with bootstrap}
-Source1:	http://getcomposer.org/download/%{version}-alpha8/%{name}.phar
-# Source1-md5:	df1001975035f07d09307bf1f1e62584
-%endif
+# Source0-md5:	5e4ff16cff75fae31285196c5f51a8f8
 Source2:	https://raw.githubusercontent.com/iArren/%{name}-bash-completion/86a8129/composer
 # Source2-md5:	cdeebf0a0da1fd07d0fd886d0461642e
-Patch0:		nogit.patch
-Patch1:		no-vendors.patch
-Patch2:		autoload-config.patch
-Patch3:		update-memory-limit.patch
-Patch4:		svn-ignore-externals.patch
+Source3:	autoload.php
+Patch0:		autoload.patch
+Patch1:		update-memory-limit.patch
+Patch2:		svn-ignore-externals.patch
 URL:		http://www.getcomposer.org/
-BuildRequires:	%{php_name}-cli
-BuildRequires:	%{php_name}-ctype
-BuildRequires:	%{php_name}-filter
-BuildRequires:	%{php_name}-hash
-BuildRequires:	%{php_name}-json
-BuildRequires:	%{php_name}-openssl
-BuildRequires:	%{php_name}-phar
-BuildRequires:	%{php_name}-zip
-BuildRequires:	%{php_name}-zlib
-BuildRequires:	/usr/bin/phar
-BuildRequires:	php-devel
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.673
-%if %{without bootstrap}
-BuildRequires:	%{name}
-BuildRequires:	php-symfony2-Console >= 2.3
-BuildRequires:	php-symfony2-Finder >= 2.2
-%endif
 Requires:	php(core) >= %{php_min_version}
 Requires:	php(ctype)
 Requires:	php(date)
@@ -64,21 +40,21 @@ Requires:	php(simplexml)
 Requires:	php(spl)
 Requires:	php(zip)
 Requires:	php(zlib)
-%if %{without bootstrap}
+Requires:	php-composer-semver >= 1.0.0
+Requires:	php-composer-spdx-licenses >= 1.0.0
 Requires:	php-justinrainbow-json-schema >= 1.4
 Requires:	php-seld-jsonlint >= 1.1.2
-Requires:	php-symfony2-Console >= 2.5
-Requires:	php-symfony2-Finder >= 2.2
-Requires:	php-symfony2-Process >= 2.1
-%endif
+Requires:	php-seld-phar-utils >= 1.0.0
+Requires:	php-symfony2-ClassLoader >= 2.7.7
+Requires:	php-symfony2-Console >= 2.7.7
+Requires:	php-symfony2-Finder >= 2.7.7
+Requires:	php-symfony2-Process >= 2.7.7
 Suggests:	bash-completion-%{name}
 Suggests:	git-core
 Suggests:	mercurial
 Suggests:	subversion
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define		_appdir		%{_datadir}/%{name}
 
 %description
 Composer is a tool for dependency management in PHP.
@@ -103,48 +79,24 @@ Pakiet ten dostarcza bashowe uzupełnianie nazw dla Composera.
 %setup -qc -n %{name}-%{version}-%{release}
 mv composer-*/* .
 %patch0 -p1
-%{!?with_bootstrap:%patch1 -p1}
-%patch3 -p1
-%patch4 -p1
+%patch1 -p1
+%patch2 -p1
 
 mv composer.lock{,.disabled}
 # NOTE: do not use %{__php} macro here, need unversioned php binary
 %{__sed} -i -e '1s,^#!.*env php,#!/usr/bin/php,' bin/*
 
+cp -p %{SOURCE3} src/Composer/autoload.php
+
 # cleanup backups after patching
 find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 
-%build
-%if %{with bootstrap}
-composer='%{__php} %{SOURCE1}'
-phar extract -f "%{SOURCE1}" -i vendor .
-%else
-composer=composer
-%endif
-if [ ! -d vendor ]; then
-	COMPOSER_HOME=${PWD:=$(pwd)} \
-	$composer dump-autoload -v
-	%{__patch} -p1 < %{PATCH2}
-fi
-
-RELEASE_DATE=$(LC_ALL=C date) \
-PACKAGE_VERSION=%{?!githash:%{version}-%{subver}}%{?githash} \
-DEV_VERSION=%{!?githash:0}%{?githash:1} \
-%{__php} -d phar.readonly=0 ./bin/compile
-
-# sanity check
-%{__php} composer.phar --version
-
-install -d build
-%{__php} -r '$phar = new Phar($argv[1]); $phar->extractTo($argv[2]);' composer.phar build
-
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_appdir},/var/cache/composer}
-cd build
-cp -a bin src res vendor $RPM_BUILD_ROOT%{_appdir}
-ln -s %{_appdir}/bin/%{name} $RPM_BUILD_ROOT%{_bindir}/%{name}
-chmod +x $RPM_BUILD_ROOT%{_appdir}/bin/*
+install -d $RPM_BUILD_ROOT{%{_bindir},%{php_data_dir}/Composer,/var/cache/composer}
+cp -a src/Composer $RPM_BUILD_ROOT%{php_data_dir}
+cp -a res $RPM_BUILD_ROOT%{php_data_dir}/Composer
+install -p bin/composer $RPM_BUILD_ROOT%{_bindir}/%{name}
 
 install -d $RPM_BUILD_ROOT%{bash_compdir}
 cp -p %{SOURCE2} $RPM_BUILD_ROOT%{bash_compdir}/composer
@@ -156,12 +108,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README.md CHANGELOG.md LICENSE PORTING_INFO
 %attr(755,root,root) %{_bindir}/composer
-%dir %{_appdir}
-%dir %{_appdir}/bin
-%attr(755,root,root) %{_appdir}/bin/*
-%{_appdir}/res
-%{_appdir}/src
-%{_appdir}/vendor
+%{php_data_dir}/Composer
 
 # top level cachedir, create user cache dirs here manually
 %dir %attr(711,root,http) /var/cache/composer

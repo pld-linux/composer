@@ -1,0 +1,26 @@
+--- composer-1.0.0-14.alpha11/bin/composer~	2015-11-25 23:34:22.000000000 +0200
++++ composer-1.0.0-14.alpha11/bin/composer	2015-11-25 23:34:25.939418752 +0200
+@@ -5,7 +5,11 @@
+     echo 'Warning: Composer should be invoked via the CLI version of PHP, not the '.PHP_SAPI.' SAPI'.PHP_EOL;
+ }
+ 
+-require __DIR__.'/../src/bootstrap.php';
++if (file_exists($autoload = __DIR__ . '/../src/Composer/autoload.php')) {
++	require $autoload;
++} else {
++	require '/usr/share/php/Composer/autoload.php';
++}
+ 
+ use Composer\Console\Application;
+ 
+--- composer-1.0.0-14.alpha11/src/Composer/Json/JsonFile.php~	2015-11-25 23:45:44.000000000 +0200
++++ composer-1.0.0-14.alpha11/src/Composer/Json/JsonFile.php	2015-11-25 23:45:49.118198863 +0200
+@@ -149,7 +149,7 @@
+             self::validateSyntax($content, $this->path);
+         }
+ 
+-        $schemaFile = __DIR__ . '/../../../res/composer-schema.json';
++        $schemaFile = __DIR__ . '/../res/composer-schema.json';
+         $schemaData = json_decode(file_get_contents($schemaFile));
+ 
+         if ($schema === self::LAX_SCHEMA) {
