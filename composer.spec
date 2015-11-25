@@ -6,7 +6,7 @@
 
 %define		rel		14
 #define		githash	5744981
-# $ git rev-list 1.0.0-alpha10..%{githash} --count
+# $ git rev-list 1.0.0-alpha11..%{githash} --count
 #define		commits	216
 %define		subver	alpha11
 %define		php_min_version 5.3.4
@@ -26,11 +26,13 @@ Source1:	http://getcomposer.org/download/%{version}-alpha8/%{name}.phar
 %endif
 Source2:	https://raw.githubusercontent.com/iArren/%{name}-bash-completion/86a8129/composer
 # Source2-md5:	cdeebf0a0da1fd07d0fd886d0461642e
+Source3:	autoload.php
 Patch0:		nogit.patch
 Patch1:		no-vendors.patch
 Patch2:		autoload-config.patch
 Patch3:		update-memory-limit.patch
 Patch4:		svn-ignore-externals.patch
+Patch10:	autoload.patch
 URL:		http://www.getcomposer.org/
 BuildRequires:	%{php_name}-cli
 BuildRequires:	%{php_name}-ctype
@@ -70,9 +72,10 @@ Requires:	php(zlib)
 %if %{without bootstrap}
 Requires:	php-justinrainbow-json-schema >= 1.4
 Requires:	php-seld-jsonlint >= 1.1.2
-Requires:	php-symfony2-Console >= 2.5
-Requires:	php-symfony2-Finder >= 2.2
-Requires:	php-symfony2-Process >= 2.1
+Requires:	php-symfony2-ClassLoader >= 2.7.7
+Requires:	php-symfony2-Console >= 2.7.7
+Requires:	php-symfony2-Finder >= 2.7.7
+Requires:	php-symfony2-Process >= 2.7.7
 %endif
 Suggests:	bash-completion-%{name}
 Suggests:	git-core
@@ -80,8 +83,6 @@ Suggests:	mercurial
 Suggests:	subversion
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define		_appdir		%{_datadir}/%{name}
 
 %description
 Composer is a tool for dependency management in PHP.
@@ -105,19 +106,19 @@ Pakiet ten dostarcza bashowe uzupełnianie nazw dla Composera.
 %prep
 %setup -qc -n %{name}-%{version}-%{release}
 mv composer-*/* .
-%patch0 -p1
-%{!?with_bootstrap:%patch1 -p1}
-%patch3 -p1
-%patch4 -p1
+%patch10 -p1
 
 mv composer.lock{,.disabled}
 # NOTE: do not use %{__php} macro here, need unversioned php binary
 %{__sed} -i -e '1s,^#!.*env php,#!/usr/bin/php,' bin/*
 
+cp -p %{SOURCE3} src/Composer/autoload.php
+
 # cleanup backups after patching
 find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 
 %build
+%if 0
 %if %{with bootstrap}
 composer='%{__php} %{SOURCE1}'
 phar extract -f "%{SOURCE1}" -i vendor .
@@ -140,14 +141,14 @@ DEV_VERSION=%{!?githash:0}%{?githash:1} \
 
 install -d build
 %{__php} -r '$phar = new Phar($argv[1]); $phar->extractTo($argv[2]);' composer.phar build
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_appdir},/var/cache/composer}
-cd build
-cp -a bin src res vendor $RPM_BUILD_ROOT%{_appdir}
-ln -s %{_appdir}/bin/%{name} $RPM_BUILD_ROOT%{_bindir}/%{name}
-chmod +x $RPM_BUILD_ROOT%{_appdir}/bin/*
+install -d $RPM_BUILD_ROOT{%{_bindir},%{php_data_dir}/Composer,/var/cache/composer}
+cp -a src/Composer $RPM_BUILD_ROOT%{php_data_dir}
+cp -a res $RPM_BUILD_ROOT%{php_data_dir}/Composer
+install -p bin/composer $RPM_BUILD_ROOT%{_bindir}/%{name}
 
 install -d $RPM_BUILD_ROOT%{bash_compdir}
 cp -p %{SOURCE2} $RPM_BUILD_ROOT%{bash_compdir}/composer
@@ -159,12 +160,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README.md CHANGELOG.md LICENSE PORTING_INFO
 %attr(755,root,root) %{_bindir}/composer
-%dir %{_appdir}
-%dir %{_appdir}/bin
-%attr(755,root,root) %{_appdir}/bin/*
-%{_appdir}/res
-%{_appdir}/src
-%{_appdir}/vendor
+%{php_data_dir}/Composer
 
 # top level cachedir, create user cache dirs here manually
 %dir %attr(711,root,http) /var/cache/composer
