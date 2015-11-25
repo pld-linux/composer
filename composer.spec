@@ -1,9 +1,6 @@
 # NOTE
 # - release tarballs: http://getcomposer.org/download/
 
-# Conditional build:
-%bcond_with	bootstrap		# build boostrap
-
 %define		rel		14
 #define		githash	5744981
 # $ git rev-list 1.0.0-alpha11..%{githash} --count
@@ -20,10 +17,6 @@ Group:		Development/Languages/PHP
 #Source0:       https://github.com/composer/composer/archive/%{githash}/%{name}-%{version}-%{subver}-%{commits}-g%{githash}.tar.gz
 Source0:	https://github.com/composer/composer/archive/%{version}-%{subver}/%{name}-%{version}-%{subver}.tar.gz
 # Source0-md5:	5e4ff16cff75fae31285196c5f51a8f8
-%if %{with bootstrap}
-Source1:	http://getcomposer.org/download/%{version}-alpha8/%{name}.phar
-# Source1-md5:	df1001975035f07d09307bf1f1e62584
-%endif
 Source2:	https://raw.githubusercontent.com/iArren/%{name}-bash-completion/86a8129/composer
 # Source2-md5:	cdeebf0a0da1fd07d0fd886d0461642e
 Source3:	autoload.php
@@ -34,27 +27,8 @@ Patch3:		update-memory-limit.patch
 Patch4:		svn-ignore-externals.patch
 Patch10:	autoload.patch
 URL:		http://www.getcomposer.org/
-BuildRequires:	%{php_name}-cli
-BuildRequires:	%{php_name}-ctype
-BuildRequires:	%{php_name}-filter
-BuildRequires:	%{php_name}-hash
-BuildRequires:	%{php_name}-json
-BuildRequires:	%{php_name}-openssl
-BuildRequires:	%{php_name}-phar
-BuildRequires:	%{php_name}-zip
-BuildRequires:	%{php_name}-zlib
-BuildRequires:	/usr/bin/phar
-BuildRequires:	php-devel
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.673
-%if %{without bootstrap}
-BuildRequires:	%{name}
-BuildRequires:	php-composer-semver >= 1.0.0
-BuildRequires:	php-composer-spdx-licenses >= 1.0.0
-BuildRequires:	php-seld-phar-utils >= 1.0.0
-BuildRequires:	php-symfony2-Console >= 2.3
-BuildRequires:	php-symfony2-Finder >= 2.2
-%endif
 Requires:	php(core) >= %{php_min_version}
 Requires:	php(ctype)
 Requires:	php(date)
@@ -69,14 +43,15 @@ Requires:	php(simplexml)
 Requires:	php(spl)
 Requires:	php(zip)
 Requires:	php(zlib)
-%if %{without bootstrap}
+Requires:	php-composer-semver >= 1.0.0
+Requires:	php-composer-spdx-licenses >= 1.0.0
 Requires:	php-justinrainbow-json-schema >= 1.4
 Requires:	php-seld-jsonlint >= 1.1.2
+Requires:	php-seld-phar-utils >= 1.0.0
 Requires:	php-symfony2-ClassLoader >= 2.7.7
 Requires:	php-symfony2-Console >= 2.7.7
 Requires:	php-symfony2-Finder >= 2.7.7
 Requires:	php-symfony2-Process >= 2.7.7
-%endif
 Suggests:	bash-completion-%{name}
 Suggests:	git-core
 Suggests:	mercurial
@@ -116,32 +91,6 @@ cp -p %{SOURCE3} src/Composer/autoload.php
 
 # cleanup backups after patching
 find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
-
-%build
-%if 0
-%if %{with bootstrap}
-composer='%{__php} %{SOURCE1}'
-phar extract -f "%{SOURCE1}" -i vendor .
-%else
-composer=composer
-%endif
-if [ ! -d vendor ]; then
-	COMPOSER_HOME=${PWD:=$(pwd)} \
-	$composer dump-autoload -v
-	%{__patch} -p1 < %{PATCH2}
-fi
-
-RELEASE_DATE=$(LC_ALL=C date) \
-PACKAGE_VERSION=%{?!githash:%{version}-%{subver}}%{?githash} \
-DEV_VERSION=%{!?githash:0}%{?githash:1} \
-%{__php} -d phar.readonly=0 ./bin/compile
-
-# sanity check
-%{__php} composer.phar --version
-
-install -d build
-%{__php} -r '$phar = new Phar($argv[1]); $phar->extractTo($argv[2]);' composer.phar build
-%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
