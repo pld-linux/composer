@@ -47,6 +47,8 @@ BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.673
 %if %{without bootstrap}
 BuildRequires:	%{name}
+BuildRequires:	php-composer-semver >= 1.2.0
+BuildRequires:	php-composer-spdx-licenses >= 1.1.2
 BuildRequires:	php-symfony2-Console >= 2.3
 BuildRequires:	php-symfony2-Finder >= 2.2
 %endif

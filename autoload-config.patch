@@ -1,6 +1,6 @@
 --- composer-1.0.0-14.alpha11/vendor/composer/autoload_namespaces.php~	2015-11-25 18:29:26.000000000 +0200
 +++ composer-1.0.0-14.alpha11/vendor/composer/autoload_namespaces.php	2015-11-25 18:29:59.220529712 +0200
-@@ -4,6 +4,13 @@
+@@ -4,6 +4,15 @@
  
  $vendorDir = dirname(dirname(__FILE__));
  $baseDir = dirname($vendorDir);
@@ -11,6 +11,8 @@
 +    'Symfony\\Component\\Process\\' => array($pearDir),
 +    'Symfony\\Component\\Finder' => array($pearDir),
 +    'Symfony\\Component\\Console\\' => array($pearDir),
++    'Composer\\Spdx\\' => array($pearDir),
++    'Composer\\Semver\\' => array($pearDir),
 +    'Seld\\JsonLint' => array($phpDir),
 +    'JsonSchema' => array($phpDir),
  );
