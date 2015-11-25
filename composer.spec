@@ -8,7 +8,7 @@
 #define		githash	5744981
 # $ git rev-list 1.0.0-alpha10..%{githash} --count
 #define		commits	216
-%define		subver	alpha10
+%define		subver	alpha11
 %define		php_min_version 5.3.4
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
@@ -19,7 +19,7 @@ License:	MIT
 Group:		Development/Languages/PHP
 #Source0:       https://github.com/composer/composer/archive/%{githash}/%{name}-%{version}-%{subver}-%{commits}-g%{githash}.tar.gz
 Source0:	https://github.com/composer/composer/archive/%{version}-%{subver}/%{name}-%{version}-%{subver}.tar.gz
-# Source0-md5:	e821eec53cbb98871b4cccfc82a6bae7
+# Source0-md5:	5e4ff16cff75fae31285196c5f51a8f8
 %if %{with bootstrap}
 Source1:	http://getcomposer.org/download/%{version}-alpha8/%{name}.phar
 # Source1-md5:	df1001975035f07d09307bf1f1e62584

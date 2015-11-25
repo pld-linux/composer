@@ -4,14 +4,14 @@ as the memory usage is unexpected, just disable it
 
 https://github.com/composer/composer/issues/1898
 
---- composer-1.0.0-0.alpha8.5.ac497fe/src/Composer/Command/UpdateCommand.php~	2014-06-10 17:13:12.000000000 +0300
-+++ composer-1.0.0-0.alpha8.5.ac497fe/src/Composer/Command/UpdateCommand.php	2014-08-05 04:55:27.855176641 +0300
-@@ -65,6 +65,8 @@
+--- composer-1.0.0-14.alpha11/src/Composer/Command/UpdateCommand.php~	2015-11-14 18:21:07.000000000 +0200
++++ composer-1.0.0-14.alpha11/src/Composer/Command/UpdateCommand.php	2015-11-25 17:46:18.524578082 +0200
+@@ -75,6 +75,8 @@
  
      protected function execute(InputInterface $input, OutputInterface $output)
      {
 +        ini_set('memory_limit', -1);
 +
+         $io = $this->getIO();
          if ($input->getOption('no-custom-installers')) {
-             $output->writeln('<warning>You are using the deprecated option "no-custom-installers". Use "no-plugins" instead.</warning>');
-             $input->setOption('no-plugins', true);
+             $io->writeError('<warning>You are using the deprecated option "no-custom-installers". Use "no-plugins" instead.</warning>');

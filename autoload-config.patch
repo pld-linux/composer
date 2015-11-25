@@ -1,6 +1,6 @@
---- composer-1.0.0-0.alpha8.3.ac497fe/vendor/composer/autoload_namespaces.php~	2014-06-20 16:57:55.000000000 +0300
-+++ composer-1.0.0-0.alpha8.3.ac497fe/vendor/composer/autoload_namespaces.php	2014-06-20 16:58:38.314091739 +0300
-@@ -4,8 +4,15 @@
+--- composer-1.0.0-14.alpha11/vendor/composer/autoload_namespaces.php~	2015-11-25 18:29:26.000000000 +0200
++++ composer-1.0.0-14.alpha11/vendor/composer/autoload_namespaces.php	2015-11-25 18:29:59.220529712 +0200
+@@ -4,6 +4,13 @@
  
  $vendorDir = dirname(dirname(__FILE__));
  $baseDir = dirname($vendorDir);
@@ -13,6 +13,4 @@
 +    'Symfony\\Component\\Console\\' => array($pearDir),
 +    'Seld\\JsonLint' => array($phpDir),
 +    'JsonSchema' => array($phpDir),
-     'Composer\\Test' => array($baseDir . '/tests'),
-     'Composer' => array($baseDir . '/src'),
  );
