@@ -1,3 +1,7 @@
+#
+# Conditional build:
+%bcond_with	tests		# build with tests
+
 # NOTE
 # - release tarballs: http://getcomposer.org/download/
 
@@ -27,6 +31,10 @@ Patch3:		version.patch
 URL:		http://www.getcomposer.org/
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.673
+%if %{with tests}
+BuildRequires:	phpab
+BuildRequires:	phpunit
+%endif
 Requires:	php(core) >= %{php_min_version}
 Requires:	php(ctype)
 Requires:	php(date)
@@ -92,6 +100,13 @@ cp -p %{SOURCE3} src/Composer/autoload.php
 
 # cleanup backups after patching
 find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
+
+%build
+%if %{with tests}
+phpab -n -o src/bootstrap.php -e '*/Fixtures/*' src/ tests/
+echo "require 'src/Composer/autoload.php';" >> src/bootstrap.php
+phpunit
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
