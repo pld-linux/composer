@@ -32,6 +32,7 @@ URL:		http://www.getcomposer.org/
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.673
 %if %{with tests}
+BuildRequires:	composer
 BuildRequires:	phpab
 BuildRequires:	phpunit
 %endif
