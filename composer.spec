@@ -98,6 +98,9 @@ mv composer.lock{,.disabled}
 
 cp -p %{SOURCE3} src/Composer/autoload.php
 
+# AutoloadGenerator needs this runtime
+mv LICENSE res
+
 # move to Composer dir, this will simplify testing
 mv res src/Composer
 ln -s src/Composer/res
@@ -135,7 +138,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.md CHANGELOG.md LICENSE PORTING_INFO
+%doc README.md CHANGELOG.md PORTING_INFO
+%doc src/Composer/res/LICENSE
 %attr(755,root,root) %{_bindir}/composer
 %{php_data_dir}/Composer
 
