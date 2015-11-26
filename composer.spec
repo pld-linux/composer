@@ -1,7 +1,7 @@
 # NOTE
 # - release tarballs: http://getcomposer.org/download/
 
-%define		rel		14
+%define		rel		15
 #define		githash	5744981
 # $ git rev-list 1.0.0-alpha11..%{githash} --count
 #define		commits	216
@@ -23,6 +23,7 @@ Source3:	autoload.php
 Patch0:		autoload.patch
 Patch1:		update-memory-limit.patch
 Patch2:		svn-ignore-externals.patch
+Patch3:		version.patch
 URL:		http://www.getcomposer.org/
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.673
@@ -81,6 +82,7 @@ mv composer-*/* .
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 mv composer.lock{,.disabled}
 # NOTE: do not use %{__php} macro here, need unversioned php binary
