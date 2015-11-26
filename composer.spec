@@ -98,6 +98,10 @@ mv composer.lock{,.disabled}
 
 cp -p %{SOURCE3} src/Composer/autoload.php
 
+# move to Composer dir, this will simplify testing
+mv res src/Composer
+ln -s src/Composer/res
+
 # cleanup backups after patching
 find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 
@@ -112,7 +116,6 @@ phpunit
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{php_data_dir}/Composer,/var/cache/composer}
 cp -a src/Composer $RPM_BUILD_ROOT%{php_data_dir}
-cp -a res $RPM_BUILD_ROOT%{php_data_dir}/Composer
 install -p bin/composer $RPM_BUILD_ROOT%{_bindir}/%{name}
 
 install -d $RPM_BUILD_ROOT%{bash_compdir}
