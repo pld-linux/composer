@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_with	tests		# build with tests
+%bcond_without	tests		# build with tests
 
 # NOTE
 # - release tarballs: http://getcomposer.org/download/
@@ -104,6 +104,15 @@ ln -s src/Composer/res
 
 # cleanup backups after patching
 find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
+
+# needs newer phpunit:
+# missing method PHPUnit_Framework_MockObject_Builder_InvocationMocker::willReturn()
+rm tests/Composer/Test/EventDispatcher/EventDispatcherTest.php
+rm tests/Composer/Test/IO/ConsoleIOTest.php
+rm tests/Composer/Test/Package/Loader/RootPackageLoaderTest.php
+rm tests/Composer/Test/Package/RootAliasPackageTest.php
+rm tests/Composer/Test/Package/Version/VersionGuesserTest.php
+rm tests/Composer/Test/Util/GitHubTest.php
 
 %build
 %if %{with tests}
