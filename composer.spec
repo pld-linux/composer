@@ -29,10 +29,11 @@ Patch1:		update-memory-limit.patch
 Patch2:		svn-ignore-externals.patch
 Patch3:		version.patch
 URL:		http://www.getcomposer.org/
+BuildRequires:	php-devel
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.673
 %if %{with tests}
-BuildRequires:	composer
+BuildRequires:	composer >= 1.0.0-15.alpha11
 BuildRequires:	phpab
 BuildRequires:	phpunit
 %endif
