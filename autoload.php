@@ -15,12 +15,13 @@ $baseDir = dirname(__DIR__);
 
 $loader->addPrefixes(array(
     'Composer\\'  => $baseDir,
-	// Dependencies
+    // Dependencies
     'Composer\\Semver\\' => array($phpDir),
     'Composer\\Spdx\\' => array($phpDir),
     'JsonSchema' => array($phpDir),
     'Seld\\JsonLint' => array($phpDir),
     'Seld\\PharUtils\\' => array($phpDir),
+    'Seld\\CliPrompt\\' => array($phpDir),
     'Symfony\\Component\\Console\\' => array($phpDir),
     'Symfony\\Component\\Finder' => array($phpDir),
     'Symfony\\Component\\Process\\' => array($phpDir),

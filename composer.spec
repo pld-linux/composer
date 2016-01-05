@@ -5,7 +5,7 @@
 # NOTE
 # - release tarballs: http://getcomposer.org/download/
 
-%define		rel		15
+%define		rel		1
 #define		githash	5744981
 # $ git rev-list 1.0.0-alpha11..%{githash} --count
 #define		commits	216
@@ -15,7 +15,7 @@
 Summary:	Dependency Manager for PHP
 Name:		composer
 Version:	1.0.0
-Release:	%{rel}.%{subver}%{?commits:.%{commits}}%{?githash:.g%{githash}}
+Release:	16.%{subver}%{?commits:.%{commits}}%{?githash:.g%{githash}}.%{rel}
 License:	MIT
 Group:		Development/Languages/PHP
 #Source0:       https://github.com/composer/composer/archive/%{githash}/%{name}-%{version}-%{subver}-%{commits}-g%{githash}.tar.gz
@@ -54,6 +54,7 @@ Requires:	php(zlib)
 Requires:	php-composer-semver >= 1.0.0
 Requires:	php-composer-spdx-licenses >= 1.0.0
 Requires:	php-justinrainbow-json-schema >= 1.4
+Requires:	php-seld-cli-prompt >= 1.0.0
 Requires:	php-seld-jsonlint >= 1.1.2
 Requires:	php-seld-phar-utils >= 1.0.0
 Requires:	php-symfony2-ClassLoader >= 2.7.7
