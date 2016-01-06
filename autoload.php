@@ -26,6 +26,5 @@ $loader->addPrefixes(array(
     'Symfony\\Component\\Finder' => array($phpDir),
     'Symfony\\Component\\Process\\' => array($phpDir),
 ));
-$loader->register();
 
 return $loader;
