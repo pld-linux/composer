@@ -7,20 +7,20 @@
 
 %define		rel		1
 #define		githash	5744981
-# $ git rev-list 1.0.0-alpha11..%{githash} --count
+# $ git rev-list 1.0.0-beta1..%{githash} --count
 #define		commits	216
-%define		subver	alpha11
+%define		subver	beta1
 %define		php_min_version 5.3.4
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
 Version:	1.0.0
-Release:	16.%{subver}%{?commits:.%{commits}}%{?githash:.g%{githash}}.%{rel}
+Release:	17.%{subver}%{?commits:.%{commits}}%{?githash:.g%{githash}}.%{rel}
 License:	MIT
 Group:		Development/Languages/PHP
 #Source0:       https://github.com/composer/composer/archive/%{githash}/%{name}-%{version}-%{subver}-%{commits}-g%{githash}.tar.gz
 Source0:	https://github.com/composer/composer/archive/%{version}-%{subver}/%{name}-%{version}-%{subver}.tar.gz
-# Source0-md5:	5e4ff16cff75fae31285196c5f51a8f8
+# Source0-md5:	7f57f813efcb81f5426a7953273c310c
 Source2:	https://raw.githubusercontent.com/iArren/%{name}-bash-completion/86a8129/composer
 # Source2-md5:	cdeebf0a0da1fd07d0fd886d0461642e
 Source3:	autoload.php
@@ -33,7 +33,7 @@ BuildRequires:	php-devel
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.673
 %if %{with tests}
-BuildRequires:	composer >= 1.0.0-15.alpha11
+BuildRequires:	composer >= 1.0.0-17.beta1
 BuildRequires:	phpab
 BuildRequires:	phpunit
 %endif
@@ -53,9 +53,9 @@ Requires:	php(zip)
 Requires:	php(zlib)
 Requires:	php-composer-semver >= 1.0.0
 Requires:	php-composer-spdx-licenses >= 1.0.0
-Requires:	php-justinrainbow-json-schema >= 1.4
+Requires:	php-justinrainbow-json-schema >= 1.6
 Requires:	php-seld-cli-prompt >= 1.0.0
-Requires:	php-seld-jsonlint >= 1.1.2
+Requires:	php-seld-jsonlint >= 1.4
 Requires:	php-seld-phar-utils >= 1.0.0
 Requires:	php-symfony2-ClassLoader >= 2.7.7
 Requires:	php-symfony2-Console >= 2.7.7
