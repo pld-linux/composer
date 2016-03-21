@@ -34,6 +34,7 @@ BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.673
 %if %{with tests}
 BuildRequires:	composer >= 1.0.0-17.beta1
+BuildRequires:	git-core
 BuildRequires:	phpab
 BuildRequires:	phpunit
 %endif
