@@ -113,12 +113,16 @@ find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 
 # needs newer phpunit:
 # missing method PHPUnit_Framework_MockObject_Builder_InvocationMocker::willReturn()
+rm tests/Composer/Test/ApplicationTest.php
 rm tests/Composer/Test/EventDispatcher/EventDispatcherTest.php
 rm tests/Composer/Test/IO/ConsoleIOTest.php
 rm tests/Composer/Test/Package/Loader/RootPackageLoaderTest.php
 rm tests/Composer/Test/Package/RootAliasPackageTest.php
 rm tests/Composer/Test/Package/Version/VersionGuesserTest.php
 rm tests/Composer/Test/Util/GitHubTest.php
+rm tests/Composer/Test/Util/GitLabTest.php
+# Call to undefined method Composer\Test\Repository\Vcs\GitLabDriverTest::prophesize()
+rm tests/Composer/Test/Repository/Vcs/GitLabDriverTest.php
 
 %build
 %if %{with tests}
