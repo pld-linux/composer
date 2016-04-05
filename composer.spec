@@ -5,22 +5,16 @@
 # NOTE
 # - release tarballs: http://getcomposer.org/download/
 
-%define		rel		1
-#define		githash	5744981
-# $ git rev-list 1.0.0-beta1..%{githash} --count
-#define		commits	216
-%define		subver	beta1
 %define		php_min_version 5.3.4
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
 Version:	1.0.0
-Release:	17.%{subver}%{?commits:.%{commits}}%{?githash:.g%{githash}}.%{rel}
+Release:	18
 License:	MIT
 Group:		Development/Languages/PHP
-#Source0:       https://github.com/composer/composer/archive/%{githash}/%{name}-%{version}-%{subver}-%{commits}-g%{githash}.tar.gz
-Source0:	https://github.com/composer/composer/archive/%{version}-%{subver}/%{name}-%{version}-%{subver}.tar.gz
-# Source0-md5:	7f57f813efcb81f5426a7953273c310c
+Source0:	https://github.com/composer/composer/archive/%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	9705bcf15d272acad2169a9b369cafd9
 Source2:	https://raw.githubusercontent.com/iArren/%{name}-bash-completion/86a8129/composer
 # Source2-md5:	cdeebf0a0da1fd07d0fd886d0461642e
 Source3:	autoload.php
@@ -122,6 +116,8 @@ rm tests/Composer/Test/Package/RootAliasPackageTest.php
 rm tests/Composer/Test/Package/Version/VersionGuesserTest.php
 rm tests/Composer/Test/Util/GitHubTest.php
 rm tests/Composer/Test/Util/GitLabTest.php
+# method PHPUnit_Framework_MockObject_Builder_InvocationMocker::withConsecutive()
+rm tests/Composer/Test/Util/BitbucketTest.php
 # Call to undefined method Composer\Test\Repository\Vcs\GitLabDriverTest::prophesize()
 rm tests/Composer/Test/Repository/Vcs/GitLabDriverTest.php
 
