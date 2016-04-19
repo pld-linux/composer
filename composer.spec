@@ -9,19 +9,18 @@
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
-Version:	1.0.0
-Release:	18
+Version:	1.0.1
+Release:	1
 License:	MIT
 Group:		Development/Languages/PHP
 Source0:	https://github.com/composer/composer/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	9705bcf15d272acad2169a9b369cafd9
+# Source0-md5:	41aa154b863ad1ddb4e261da5b12416d
 Source2:	https://raw.githubusercontent.com/iArren/%{name}-bash-completion/86a8129/composer
 # Source2-md5:	cdeebf0a0da1fd07d0fd886d0461642e
 Source3:	autoload.php
 Patch0:		autoload.patch
 Patch1:		update-memory-limit.patch
 Patch2:		svn-ignore-externals.patch
-Patch3:		version.patch
 URL:		http://www.getcomposer.org/
 BuildRequires:	php-devel
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
@@ -88,7 +87,6 @@ mv composer-*/* .
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 mv composer.lock{,.disabled}
 # NOTE: do not use %{__php} macro here, need unversioned php binary
