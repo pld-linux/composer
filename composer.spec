@@ -10,7 +10,7 @@
 Summary:	Dependency Manager for PHP
 Name:		composer
 Version:	1.0.1
-Release:	1
+Release:	2
 License:	MIT
 Group:		Development/Languages/PHP
 Source0:	https://github.com/composer/composer/archive/%{version}/%{name}-%{version}.tar.gz
@@ -21,12 +21,13 @@ Source3:	autoload.php
 Patch0:		autoload.patch
 Patch1:		update-memory-limit.patch
 Patch2:		svn-ignore-externals.patch
+Patch3:		ca-certs.patch
 URL:		http://www.getcomposer.org/
 BuildRequires:	php-devel
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.673
 %if %{with tests}
-BuildRequires:	composer >= 1.0.0-17.beta1
+BuildRequires:	composer >= 1.0.1-2
 BuildRequires:	git-core
 BuildRequires:	phpab
 BuildRequires:	phpunit
@@ -50,6 +51,7 @@ Requires:	php-composer-spdx-licenses >= 1.0.0
 Requires:	php-justinrainbow-json-schema >= 1.6
 Requires:	php-seld-cli-prompt >= 1.0.0
 Requires:	php-seld-jsonlint >= 1.4
+Requires:	ca-certificates >= 20141019-3
 Requires:	php-seld-phar-utils >= 1.0.0
 Requires:	php-symfony2-ClassLoader >= 2.7.7
 Requires:	php-symfony2-Console >= 2.7.7
@@ -82,11 +84,11 @@ Bash completion for Composer package and dependency manager.
 Pakiet ten dostarcza bashowe uzupełnianie nazw dla Composera.
 
 %prep
-%setup -qc -n %{name}-%{version}-%{release}
-mv composer-*/* .
+%setup -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 mv composer.lock{,.disabled}
 # NOTE: do not use %{__php} macro here, need unversioned php binary
@@ -96,6 +98,9 @@ cp -p %{SOURCE3} src/Composer/autoload.php
 
 # AutoloadGenerator needs this runtime
 mv LICENSE res
+
+# use system bundle
+rm res/cacert.pem
 
 # move to Composer dir, this will simplify testing
 mv res src/Composer
