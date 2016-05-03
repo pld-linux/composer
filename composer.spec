@@ -10,7 +10,7 @@
 Summary:	Dependency Manager for PHP
 Name:		composer
 Version:	1.0.1
-Release:	2
+Release:	3
 License:	MIT
 Group:		Development/Languages/PHP
 Source0:	https://github.com/composer/composer/archive/%{version}/%{name}-%{version}.tar.gz
@@ -32,6 +32,7 @@ BuildRequires:	git-core
 BuildRequires:	phpab
 BuildRequires:	phpunit
 %endif
+Requires:	ca-certificates >= 20141019-3
 Requires:	php(core) >= %{php_min_version}
 Requires:	php(ctype)
 Requires:	php(date)
@@ -51,7 +52,6 @@ Requires:	php-composer-spdx-licenses >= 1.0.0
 Requires:	php-justinrainbow-json-schema >= 1.6
 Requires:	php-seld-cli-prompt >= 1.0.0
 Requires:	php-seld-jsonlint >= 1.4
-Requires:	ca-certificates >= 20141019-3
 Requires:	php-seld-phar-utils >= 1.0.0
 Requires:	php-symfony2-ClassLoader >= 2.7.7
 Requires:	php-symfony2-Console >= 2.7.7
@@ -61,6 +61,7 @@ Suggests:	bash-completion-%{name}
 Suggests:	git-core
 Suggests:	mercurial
 Suggests:	subversion
+Conflicts:	satis < 1.0.0-1.alpha1.193
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
