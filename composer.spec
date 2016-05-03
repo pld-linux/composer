@@ -9,12 +9,12 @@
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
-Version:	1.0.1
-Release:	3
+Version:	1.0.3
+Release:	1
 License:	MIT
 Group:		Development/Languages/PHP
 Source0:	https://github.com/composer/composer/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	41aa154b863ad1ddb4e261da5b12416d
+# Source0-md5:	8785baecfbdbfbcb5ffb8bbe98c157cf
 Source2:	https://raw.githubusercontent.com/iArren/%{name}-bash-completion/86a8129/composer
 # Source2-md5:	cdeebf0a0da1fd07d0fd886d0461642e
 Source3:	autoload.php
