@@ -2,26 +2,22 @@
 # Conditional build:
 %bcond_without	tests		# build with tests
 
-# NOTE
-# - release tarballs: http://getcomposer.org/download/
-
 %define		php_min_version 5.3.4
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
-Version:	1.0.3
+Version:	1.1.0
 Release:	1
 License:	MIT
 Group:		Development/Languages/PHP
 Source0:	https://github.com/composer/composer/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	8785baecfbdbfbcb5ffb8bbe98c157cf
+# Source0-md5:	23594317809b9e1fb1e9ed1a38e89149
 Source2:	https://raw.githubusercontent.com/iArren/%{name}-bash-completion/86a8129/composer
 # Source2-md5:	cdeebf0a0da1fd07d0fd886d0461642e
 Source3:	autoload.php
 Patch0:		autoload.patch
 Patch1:		update-memory-limit.patch
 Patch2:		svn-ignore-externals.patch
-Patch3:		ca-certs.patch
 URL:		http://www.getcomposer.org/
 BuildRequires:	php-devel
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
@@ -32,7 +28,6 @@ BuildRequires:	git-core
 BuildRequires:	phpab
 BuildRequires:	phpunit
 %endif
-Requires:	ca-certificates >= 20141019-3
 Requires:	php(core) >= %{php_min_version}
 Requires:	php(ctype)
 Requires:	php(date)
@@ -47,6 +42,7 @@ Requires:	php(simplexml)
 Requires:	php(spl)
 Requires:	php(zip)
 Requires:	php(zlib)
+Requires:	php-composer-ca-bundle >= 1.0.2
 Requires:	php-composer-semver >= 1.0.0
 Requires:	php-composer-spdx-licenses >= 1.0.0
 Requires:	php-justinrainbow-json-schema >= 1.6
@@ -89,7 +85,6 @@ Pakiet ten dostarcza bashowe uzupełnianie nazw dla Composera.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 mv composer.lock{,.disabled}
 # NOTE: do not use %{__php} macro here, need unversioned php binary
@@ -99,9 +94,6 @@ cp -p %{SOURCE3} src/Composer/autoload.php
 
 # AutoloadGenerator needs this runtime
 mv LICENSE res
-
-# use system bundle
-rm res/cacert.pem
 
 # move to Composer dir, this will simplify testing
 mv res src/Composer
