@@ -46,6 +46,7 @@ Requires:	php-composer-ca-bundle >= 1.0.2
 Requires:	php-composer-semver >= 1.0.0
 Requires:	php-composer-spdx-licenses >= 1.0.0
 Requires:	php-justinrainbow-json-schema >= 1.6
+Requires:	php-psr-Log >= 1.0
 Requires:	php-seld-cli-prompt >= 1.0.0
 Requires:	php-seld-jsonlint >= 1.4
 Requires:	php-seld-phar-utils >= 1.0.0
