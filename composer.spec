@@ -23,7 +23,9 @@ BuildRequires:	php-devel
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.673
 %if %{with tests}
-BuildRequires:	composer >= 1.0.1-2
+# instead of filling duplicate deps for running tests,
+# update composer version that have neccessary runtime dependencies
+BuildRequires:	composer >= 1.1.0
 BuildRequires:	git-core
 BuildRequires:	phpab
 BuildRequires:	phpunit
