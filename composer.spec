@@ -6,12 +6,12 @@
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
-Version:	1.1.3
+Version:	1.2.0
 Release:	1
 License:	MIT
 Group:		Development/Languages/PHP
 Source0:	https://github.com/composer/composer/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	43356b1d89be2bb736436710027b89ab
+# Source0-md5:	197f275abe0bfb42b21dba3c4c1c46c7
 Source2:	https://raw.githubusercontent.com/iArren/%{name}-bash-completion/86a8129/composer
 # Source2-md5:	cdeebf0a0da1fd07d0fd886d0461642e
 Source3:	autoload.php
@@ -113,12 +113,16 @@ rm tests/Composer/Test/IO/ConsoleIOTest.php
 rm tests/Composer/Test/Package/Loader/RootPackageLoaderTest.php
 rm tests/Composer/Test/Package/RootAliasPackageTest.php
 rm tests/Composer/Test/Package/Version/VersionGuesserTest.php
+rm tests/Composer/Test/Repository/ComposerRepositoryTest.php
+rm tests/Composer/Test/Repository/Vcs/GitBitbucketDriverTest.php
 rm tests/Composer/Test/Util/GitHubTest.php
 rm tests/Composer/Test/Util/GitLabTest.php
 # method PHPUnit_Framework_MockObject_Builder_InvocationMocker::withConsecutive()
 rm tests/Composer/Test/Util/BitbucketTest.php
 # Call to undefined method Composer\Test\Repository\Vcs\GitLabDriverTest::prophesize()
 rm tests/Composer/Test/Repository/Vcs/GitLabDriverTest.php
+# Mocked method does not exist.
+rm tests/Composer/Test/Installer/LibraryInstallerTest.php
 
 %build
 %if %{with tests}
