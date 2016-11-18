@@ -123,6 +123,8 @@ rm tests/Composer/Test/Util/BitbucketTest.php
 rm tests/Composer/Test/Repository/Vcs/GitLabDriverTest.php
 # Mocked method does not exist.
 rm tests/Composer/Test/Installer/LibraryInstallerTest.php
+# Uncaught Error: Call to undefined method Mock_InputInterface_0ced1568::method()
+rm tests/Composer/Test/Command/RunScriptCommandTest.php
 
 %build
 %if %{with tests}
