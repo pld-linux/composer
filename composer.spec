@@ -6,12 +6,12 @@
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
-Version:	1.2.2
+Version:	1.3.0
 Release:	1
 License:	MIT
 Group:		Development/Languages/PHP
 Source0:	https://github.com/composer/composer/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	2cdaba60950b7e5fe8061f2585dbe6f6
+# Source0-md5:	a037e39829060b52b5c947e855c89be9
 Source2:	https://raw.githubusercontent.com/iArren/%{name}-bash-completion/86a8129/composer
 # Source2-md5:	cdeebf0a0da1fd07d0fd886d0461642e
 Source3:	autoload.php
@@ -125,6 +125,8 @@ rm tests/Composer/Test/Repository/Vcs/GitLabDriverTest.php
 rm tests/Composer/Test/Installer/LibraryInstallerTest.php
 # Uncaught Error: Call to undefined method Mock_InputInterface_0ced1568::method()
 rm tests/Composer/Test/Command/RunScriptCommandTest.php
+# PHP Fatal error:  Call to undefined method Mock_Config_0d97cb71::method() 
+rm tests/Composer/Test/Util/RemoteFilesystemTest.php
 
 %build
 %if %{with tests}
