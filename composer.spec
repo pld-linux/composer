@@ -25,7 +25,7 @@ BuildRequires:	rpmbuild(macros) >= 1.673
 %if %{with tests}
 # instead of filling duplicate deps for running tests,
 # update composer version that have neccessary runtime dependencies
-BuildRequires:	composer >= 1.1.0
+BuildRequires:	composer >= 1.4.0
 BuildRequires:	git-core
 BuildRequires:	phpab
 BuildRequires:	phpunit
