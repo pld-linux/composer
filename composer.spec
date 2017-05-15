@@ -37,6 +37,7 @@ Requires:	php(filter)
 Requires:	php(hash)
 Requires:	php(json)
 Requires:	php(openssl)
+Requires:	php(pcntl)
 Requires:	php(pcre)
 Requires:	php(phar)
 Requires:	php(posix)
@@ -125,7 +126,7 @@ rm tests/Composer/Test/Repository/Vcs/GitLabDriverTest.php
 rm tests/Composer/Test/Installer/LibraryInstallerTest.php
 # Uncaught Error: Call to undefined method Mock_InputInterface_0ced1568::method()
 rm tests/Composer/Test/Command/RunScriptCommandTest.php
-# PHP Fatal error:  Call to undefined method Mock_Config_0d97cb71::method() 
+# PHP Fatal error:  Call to undefined method Mock_Config_0d97cb71::method()
 rm tests/Composer/Test/Util/RemoteFilesystemTest.php
 
 %build
