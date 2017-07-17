@@ -1,13 +1,13 @@
 #
 # Conditional build:
-%bcond_without	tests		# build with tests
+%bcond_with	tests		# build with tests
 
 %define		php_min_version 5.3.4
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
 Version:	1.4.2
-Release:	1.1
+Release:	2
 License:	MIT
 Group:		Development/Languages/PHP
 Source0:	https://github.com/composer/composer/archive/%{version}/%{name}-%{version}.tar.gz
@@ -28,7 +28,7 @@ BuildRequires:	rpmbuild(macros) >= 1.673
 BuildRequires:	composer >= 1.4.0
 BuildRequires:	git-core
 BuildRequires:	phpab
-BuildRequires:	phpunit
+BuildRequires:	phpunit >= 4.8
 %endif
 Requires:	php(core) >= %{php_min_version}
 Requires:	php(ctype)
@@ -105,29 +105,6 @@ ln -s src/Composer/res
 
 # cleanup backups after patching
 find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
-
-# needs newer phpunit:
-# missing method PHPUnit_Framework_MockObject_Builder_InvocationMocker::willReturn()
-rm tests/Composer/Test/ApplicationTest.php
-rm tests/Composer/Test/EventDispatcher/EventDispatcherTest.php
-rm tests/Composer/Test/IO/ConsoleIOTest.php
-rm tests/Composer/Test/Package/Loader/RootPackageLoaderTest.php
-rm tests/Composer/Test/Package/RootAliasPackageTest.php
-rm tests/Composer/Test/Package/Version/VersionGuesserTest.php
-rm tests/Composer/Test/Repository/ComposerRepositoryTest.php
-rm tests/Composer/Test/Repository/Vcs/GitBitbucketDriverTest.php
-rm tests/Composer/Test/Util/GitHubTest.php
-rm tests/Composer/Test/Util/GitLabTest.php
-# method PHPUnit_Framework_MockObject_Builder_InvocationMocker::withConsecutive()
-rm tests/Composer/Test/Util/BitbucketTest.php
-# Call to undefined method Composer\Test\Repository\Vcs\GitLabDriverTest::prophesize()
-rm tests/Composer/Test/Repository/Vcs/GitLabDriverTest.php
-# Mocked method does not exist.
-rm tests/Composer/Test/Installer/LibraryInstallerTest.php
-# Uncaught Error: Call to undefined method Mock_InputInterface_0ced1568::method()
-rm tests/Composer/Test/Command/RunScriptCommandTest.php
-# PHP Fatal error:  Call to undefined method Mock_Config_0d97cb71::method()
-rm tests/Composer/Test/Util/RemoteFilesystemTest.php
 
 %build
 %if %{with tests}
