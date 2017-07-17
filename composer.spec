@@ -7,7 +7,7 @@
 Summary:	Dependency Manager for PHP
 Name:		composer
 Version:	1.4.2
-Release:	1
+Release:	1.1
 License:	MIT
 Group:		Development/Languages/PHP
 Source0:	https://github.com/composer/composer/archive/%{version}/%{name}-%{version}.tar.gz
