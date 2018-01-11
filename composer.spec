@@ -6,12 +6,12 @@
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
-Version:	1.5.6
+Version:	1.6.2
 Release:	1
 License:	MIT
 Group:		Development/Languages/PHP
 Source0:	https://github.com/composer/composer/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	28afd4f8a732c4d684594aa123e06d4c
+# Source0-md5:	4a403a18c071b92db0f27bea337a669e
 Source2:	https://raw.githubusercontent.com/iArren/%{name}-bash-completion/86a8129/composer
 # Source2-md5:	cdeebf0a0da1fd07d0fd886d0461642e
 Source3:	autoload.php
@@ -47,7 +47,7 @@ Requires:	php(zip)
 Requires:	php(zlib)
 Requires:	php-composer-ca-bundle >= 1.0.2
 Requires:	php-composer-semver >= 1.0.0
-Requires:	php-composer-spdx-licenses >= 1.0.0
+Requires:	php-composer-spdx-licenses >= 1.2
 Requires:	php-justinrainbow-json-schema >= 3.0
 Requires:	php-psr-Log >= 1.0
 Requires:	php-seld-cli-prompt >= 1.0.0
