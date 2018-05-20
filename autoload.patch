@@ -1,9 +1,9 @@
---- composer-1.0.0-14.alpha11/bin/composer~	2015-11-25 23:34:22.000000000 +0200
-+++ composer-1.0.0-14.alpha11/bin/composer	2015-11-25 23:34:25.939418752 +0200
-@@ -5,7 +5,11 @@
-     echo 'Warning: Composer should be invoked via the CLI version of PHP, not the '.PHP_SAPI.' SAPI'.PHP_EOL;
+--- composer-1.6.5/bin/composer~	2018-05-04 12:44:59.000000000 +0300
++++ composer-1.6.5/bin/composer	2018-05-20 18:46:39.628512375 +0300
+@@ -6,7 +6,11 @@
  }
  
+ setlocale(LC_ALL, 'C');
 -require __DIR__.'/../src/bootstrap.php';
 +if (file_exists($autoload = __DIR__ . '/../src/Composer/autoload.php')) {
 +	require $autoload;
@@ -11,8 +11,8 @@
 +	require '/usr/share/php/Composer/autoload.php';
 +}
  
- use Composer\Console\Application;
- 
+ use Composer\Factory;
+ use Composer\XdebugHandler;
 --- composer-1.4.1/src/Composer/Json/JsonFile.php~	2017-03-10 10:29:45.000000000 +0200
 +++ composer-1.4.1/src/Composer/Json/JsonFile.php	2017-03-28 13:37:49.762829930 +0300
 @@ -156,7 +156,7 @@
