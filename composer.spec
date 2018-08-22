@@ -6,12 +6,12 @@
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
-Version:	1.6.5
+Version:	1.7.2
 Release:	1
 License:	MIT
 Group:		Development/Languages/PHP
 Source0:	https://github.com/composer/composer/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	2feed0f843c82f863710f31539913a25
+# Source0-md5:	a136929801355a1c6ee9047ca3f60a3e
 Source2:	https://raw.githubusercontent.com/iArren/%{name}-bash-completion/86a8129/composer
 # Source2-md5:	cdeebf0a0da1fd07d0fd886d0461642e
 Source3:	autoload.php
@@ -25,7 +25,7 @@ BuildRequires:	rpmbuild(macros) >= 1.673
 %if %{with tests}
 # instead of filling duplicate deps for running tests,
 # update composer version that have neccessary runtime dependencies
-BuildRequires:	composer >= 1.4.0
+BuildRequires:	composer >= 1.7.0
 BuildRequires:	git-core
 BuildRequires:	phpab
 BuildRequires:	phpunit >= 4.8
@@ -48,9 +48,9 @@ Requires:	php(zlib)
 Requires:	php-composer-ca-bundle >= 1.0.2
 Requires:	php-composer-semver >= 1.0.0
 Requires:	php-composer-spdx-licenses >= 1.2
+Requires:	php-composer-xdebug-handler >= 1.1
 Requires:	php-justinrainbow-json-schema >= 3.0
-Requires:	php-psr-Log >= 1.0
-Requires:	php-seld-cli-prompt >= 1.0.0
+Requires:	php-psr-log >= 1.0
 Requires:	php-seld-jsonlint >= 1.4
 Requires:	php-seld-phar-utils >= 1.0.0
 Requires:	php-symfony2-ClassLoader >= 2.7.7
