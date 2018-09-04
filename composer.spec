@@ -7,7 +7,7 @@
 Summary:	Dependency Manager for PHP
 Name:		composer
 Version:	1.7.2
-Release:	1
+Release:	2
 License:	MIT
 Group:		Development/Languages/PHP
 Source0:	https://github.com/composer/composer/archive/%{version}/%{name}-%{version}.tar.gz
@@ -57,6 +57,7 @@ Requires:	php-symfony2-ClassLoader >= 2.7.7
 Requires:	php-symfony2-Console >= 2.7.7
 Requires:	php-symfony2-Finder >= 2.7.7
 Requires:	php-symfony2-Process >= 2.7.7
+Requires:	unzip
 Suggests:	bash-completion-%{name}
 Suggests:	git-core
 Suggests:	mercurial
