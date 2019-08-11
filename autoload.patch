@@ -13,17 +13,17 @@
  
  use Composer\Factory;
  use Composer\XdebugHandler;
---- composer-1.4.1/src/Composer/Json/JsonFile.php~	2017-03-10 10:29:45.000000000 +0200
-+++ composer-1.4.1/src/Composer/Json/JsonFile.php	2017-03-28 13:37:49.762829930 +0300
-@@ -156,7 +156,7 @@
-             self::validateSyntax($content, $this->path);
-         }
+--- composer-1.9.0/src/Composer/Json/JsonFile.php~	2019-08-02 21:55:33.000000000 +0300
++++ composer-1.9.0/src/Composer/Json/JsonFile.php	2019-08-11 19:59:58.343540127 +0300
+@@ -34,7 +34,7 @@
+     const JSON_PRETTY_PRINT = 128;
+     const JSON_UNESCAPED_UNICODE = 256;
  
--        $schemaFile = __DIR__ . '/../../../res/composer-schema.json';
-+        $schemaFile = __DIR__ . '/../res/composer-schema.json';
+-    const COMPOSER_SCHEMA_PATH = '/../../../res/composer-schema.json';
++    const COMPOSER_SCHEMA_PATH = '/../res/composer-schema.json';
  
-         // Prepend with file:// only when not using a special schema already (e.g. in the phar)
-         if (false === strpos($schemaFile, '://')) {
+     private $path;
+     private $rfs;
 --- composer-1.0.0-15.alpha11/src/Composer/Autoload/AutoloadGenerator.php~	2015-11-14 18:21:07.000000000 +0200
 +++ composer-1.0.0-15.alpha11/src/Composer/Autoload/AutoloadGenerator.php	2015-11-26 14:52:01.344498517 +0200
 @@ -275,7 +275,7 @@
