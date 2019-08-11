@@ -1,13 +1,18 @@
 #
 # Conditional build:
 %bcond_with	tests		# build with tests
+%bcond_without	online		# online self-test
+
+%if 0%{?_pld_builder:1}
+%undefine	with_online
+%endif
 
 %define		php_min_version 5.3.4
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
 Version:	1.9.0
-Release:	1
+Release:	2
 License:	MIT
 Group:		Development/Languages/PHP
 Source0:	https://github.com/composer/composer/archive/%{version}/%{name}-%{version}.tar.gz
@@ -108,8 +113,10 @@ ln -s src/Composer/res
 find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 
 %build
+%if %{with online}
 # always run self-test
 %{__php} ./bin/composer diagnose
+%endif
 
 %if %{with tests}
 phpab -n -o src/bootstrap.php -e '*/Fixtures/*' src/ tests/
