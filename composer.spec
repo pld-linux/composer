@@ -22,10 +22,10 @@ URL:		https://getcomposer.org/
 BuildRequires:	php-devel
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.673
-%if %{with tests}
 # instead of filling duplicate deps for running tests,
 # update composer version that have neccessary runtime dependencies
 BuildRequires:	composer >= 1.7.0
+%if %{with tests}
 BuildRequires:	git-core
 BuildRequires:	phpab
 BuildRequires:	phpunit >= 4.8
@@ -108,6 +108,9 @@ ln -s src/Composer/res
 find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 
 %build
+# always run self-test
+%{__php} ./bin/composer diagnose
+
 %if %{with tests}
 phpab -n -o src/bootstrap.php -e '*/Fixtures/*' src/ tests/
 echo "require 'src/Composer/autoload.php';" >> src/bootstrap.php
