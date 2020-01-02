@@ -11,12 +11,12 @@
 %include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
-Version:	1.9.0
-Release:	2
+Version:	1.9.1
+Release:	1
 License:	MIT
 Group:		Development/Languages/PHP
 Source0:	https://github.com/composer/composer/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	83a9d56091891c1ac3a46126f8c34262
+# Source0-md5:	8282a90e7d9b9efc481765ed9800c80b
 Source2:	https://raw.githubusercontent.com/iArren/%{name}-bash-completion/86a8129/composer
 # Source2-md5:	cdeebf0a0da1fd07d0fd886d0461642e
 Source3:	autoload.php
@@ -60,6 +60,7 @@ Requires:	php-seld-jsonlint >= 1.4
 Requires:	php-seld-phar-utils >= 1.0.0
 Requires:	php-symfony2-ClassLoader >= 2.7.7
 Requires:	php-symfony2-Console >= 2.7.7
+Requires:	php-symfony2-Filesystem >= 2.7.7
 Requires:	php-symfony2-Finder >= 2.7.7
 Requires:	php-symfony2-Process >= 2.7.7
 Requires:	unzip
