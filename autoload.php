@@ -25,6 +25,7 @@ $loader->addPrefixes(array(
     'Seld\\JsonLint' => array($phpDir),
     'Seld\\PharUtils\\' => array($phpDir),
     'Symfony\\Component\\Console\\' => array($phpDir),
+    'Symfony\\Component\\Filesystem\\' => array($phpDir),
     'Symfony\\Component\\Finder' => array($phpDir),
     'Symfony\\Component\\Process\\' => array($phpDir),
 ));
