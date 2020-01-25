@@ -8,7 +8,6 @@
 %endif
 
 %define		php_min_version 5.3.4
-%include	/usr/lib/rpm/macros.php
 Summary:	Dependency Manager for PHP
 Name:		composer
 Version:	1.9.1
