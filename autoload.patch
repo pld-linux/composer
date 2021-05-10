@@ -1,5 +1,5 @@
---- composer-1.6.5/bin/composer~	2018-05-04 12:44:59.000000000 +0300
-+++ composer-1.6.5/bin/composer	2018-05-20 18:46:39.628512375 +0300
+--- composer-1.10.22/bin/composer~	2021-04-27 14:10:45.000000000 +0300
++++ composer-1.10.22/bin/composer	2021-05-10 18:32:01.839944783 +0300
 @@ -6,7 +6,11 @@
  }
  
@@ -11,8 +11,8 @@
 +	require '/usr/share/php/Composer/autoload.php';
 +}
  
- use Composer\Factory;
- use Composer\XdebugHandler;
+ use Composer\Console\Application;
+ use Composer\XdebugHandler\XdebugHandler;
 --- composer-1.9.0/src/Composer/Json/JsonFile.php~	2019-08-02 21:55:33.000000000 +0300
 +++ composer-1.9.0/src/Composer/Json/JsonFile.php	2019-08-11 19:59:58.343540127 +0300
 @@ -34,7 +34,7 @@
@@ -24,14 +24,14 @@
  
      private $path;
      private $rfs;
---- composer-1.0.0-15.alpha11/src/Composer/Autoload/AutoloadGenerator.php~	2015-11-14 18:21:07.000000000 +0200
-+++ composer-1.0.0-15.alpha11/src/Composer/Autoload/AutoloadGenerator.php	2015-11-26 14:52:01.344498517 +0200
-@@ -275,7 +275,7 @@
-         file_put_contents($targetDir.'/autoload_real.php', $this->getAutoloadRealFile(true, (bool) $includePathFileContents, $targetDirLoader, (bool) $includeFilesFileContents, $vendorPathCode, $appBaseDirCode, $suffix, $useGlobalIncludePath, $prependAutoloader));
+--- composer-1.10.22/src/Composer/Autoload/AutoloadGenerator.php~	2021-04-27 14:10:45.000000000 +0300
++++ composer-1.10.22/src/Composer/Autoload/AutoloadGenerator.php	2021-05-10 18:34:23.023946419 +0300
+@@ -315,7 +315,7 @@
+         $this->filePutContentsIfModified($targetDir.'/autoload_real.php', $this->getAutoloadRealFile(true, (bool) $includePathFileContents, $targetDirLoader, (bool) $includeFilesFileContents, $vendorPathCode, $appBaseDirCode, $suffix, $useGlobalIncludePath, $prependAutoloader, $staticPhpVersion));
  
          $this->safeCopy(__DIR__.'/ClassLoader.php', $targetDir.'/ClassLoader.php');
 -        $this->safeCopy(__DIR__.'/../../../LICENSE', $targetDir.'/LICENSE');
 +        $this->safeCopy(__DIR__.'/../res/LICENSE', $targetDir.'/LICENSE');
  
-         $this->eventDispatcher->dispatchScript(ScriptEvents::POST_AUTOLOAD_DUMP, $this->devMode, array(), array(
-             'optimize' => (bool) $scanPsr0Packages,
+         if ($this->runScripts) {
+             $this->eventDispatcher->dispatchScript(ScriptEvents::POST_AUTOLOAD_DUMP, $this->devMode, array(), array(
