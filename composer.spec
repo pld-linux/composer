@@ -93,9 +93,9 @@ Pakiet ten dostarcza bashowe uzupełnianie nazw dla Composera.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P2 -p1
 
 mv composer.lock{,.disabled}
 # NOTE: do not use %{__php} macro here, need unversioned php binary
