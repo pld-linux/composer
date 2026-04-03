@@ -1,6 +1,7 @@
---- composer-1.10.22/bin/composer~	2021-04-27 14:10:45.000000000 +0300
-+++ composer-1.10.22/bin/composer	2021-05-10 18:32:01.839944783 +0300
-@@ -6,7 +6,11 @@
+diff -urNp composer-2.9.5.orig/bin/composer composer-2.9.5/bin/composer
+--- composer-2.9.5.orig/bin/composer	2026-01-29 11:40:53.000000000 +0100
++++ composer-2.9.5/bin/composer	2026-04-03 14:04:15.341204429 +0200
+@@ -30,7 +30,11 @@ if (ini_get('opcache.enable_cli') && ini
  }
  
  setlocale(LC_ALL, 'C');
@@ -13,25 +14,29 @@
  
  use Composer\Console\Application;
  use Composer\XdebugHandler\XdebugHandler;
---- composer-1.9.0/src/Composer/Json/JsonFile.php~	2019-08-02 21:55:33.000000000 +0300
-+++ composer-1.9.0/src/Composer/Json/JsonFile.php	2019-08-11 19:59:58.343540127 +0300
-@@ -34,7 +34,7 @@
-     const JSON_PRETTY_PRINT = 128;
-     const JSON_UNESCAPED_UNICODE = 256;
+diff -urNp composer-2.9.5.orig/src/Composer/Autoload/AutoloadGenerator.php composer-2.9.5/src/Composer/Autoload/AutoloadGenerator.php
+--- composer-2.9.5.orig/src/Composer/Autoload/AutoloadGenerator.php	2026-01-29 11:40:53.000000000 +0100
++++ composer-2.9.5/src/Composer/Autoload/AutoloadGenerator.php	2026-04-03 14:04:15.347015893 +0200
+@@ -467,7 +467,7 @@ EOF;
+         $filesystem->filePutContentsIfModified($targetDir.'/autoload_real.php', $this->getAutoloadRealFile(true, (bool) $includePathFileContents, $targetDirLoader, (bool) $includeFilesFileContents, $vendorPathCode, $appBaseDirCode, $suffix, $useGlobalIncludePath, $prependAutoloader, $checkPlatform));
  
--    const COMPOSER_SCHEMA_PATH = '/../../../res/composer-schema.json';
-+    const COMPOSER_SCHEMA_PATH = '/../res/composer-schema.json';
- 
-     private $path;
-     private $rfs;
---- composer-1.10.22/src/Composer/Autoload/AutoloadGenerator.php~	2021-04-27 14:10:45.000000000 +0300
-+++ composer-1.10.22/src/Composer/Autoload/AutoloadGenerator.php	2021-05-10 18:34:23.023946419 +0300
-@@ -315,7 +315,7 @@
-         $this->filePutContentsIfModified($targetDir.'/autoload_real.php', $this->getAutoloadRealFile(true, (bool) $includePathFileContents, $targetDirLoader, (bool) $includeFilesFileContents, $vendorPathCode, $appBaseDirCode, $suffix, $useGlobalIncludePath, $prependAutoloader, $staticPhpVersion));
- 
-         $this->safeCopy(__DIR__.'/ClassLoader.php', $targetDir.'/ClassLoader.php');
--        $this->safeCopy(__DIR__.'/../../../LICENSE', $targetDir.'/LICENSE');
-+        $this->safeCopy(__DIR__.'/../res/LICENSE', $targetDir.'/LICENSE');
+         $filesystem->safeCopy(__DIR__.'/ClassLoader.php', $targetDir.'/ClassLoader.php');
+-        $filesystem->safeCopy(__DIR__.'/../../../LICENSE', $targetDir.'/LICENSE');
++        $filesystem->safeCopy(__DIR__.'/../res/LICENSE', $targetDir.'/LICENSE');
  
          if ($this->runScripts) {
-             $this->eventDispatcher->dispatchScript(ScriptEvents::POST_AUTOLOAD_DUMP, $this->devMode, array(), array(
+             $this->eventDispatcher->dispatchScript(ScriptEvents::POST_AUTOLOAD_DUMP, $this->devMode, [], [
+diff -urNp composer-2.9.5.orig/src/Composer/Json/JsonFile.php composer-2.9.5/src/Composer/Json/JsonFile.php
+--- composer-2.9.5.orig/src/Composer/Json/JsonFile.php	2026-01-29 11:40:53.000000000 +0100
++++ composer-2.9.5/src/Composer/Json/JsonFile.php	2026-04-03 14:04:15.345306428 +0200
+@@ -41,8 +41,8 @@ class JsonFile
+     /** @deprecated Use \JSON_UNESCAPED_UNICODE */
+     public const JSON_UNESCAPED_UNICODE = 256;
+ 
+-    public const COMPOSER_SCHEMA_PATH = __DIR__ . '/../../../res/composer-schema.json';
+-    public const LOCK_SCHEMA_PATH = __DIR__ . '/../../../res/composer-lock-schema.json';
++    public const COMPOSER_SCHEMA_PATH = __DIR__ . '/../res/composer-schema.json';
++    public const LOCK_SCHEMA_PATH = __DIR__ . '/../res/composer-lock-schema.json';
+ 
+     public const INDENT_DEFAULT = '    ';
+ 
