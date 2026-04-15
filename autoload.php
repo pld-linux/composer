@@ -26,6 +26,8 @@ $loader->setPsr4('Symfony\\Component\\Console\\', array($phpDir . 'Symfony/Compo
 $loader->setPsr4('Symfony\\Component\\Filesystem\\', array($phpDir . 'Symfony/Component/Filesystem'));
 $loader->setPsr4('Symfony\\Component\\Finder\\', array($phpDir . 'Symfony/Component/Finder'));
 $loader->setPsr4('Symfony\\Component\\Process\\', array($phpDir . 'Symfony/Component/Process'));
+$loader->setPsr4('Symfony\\Component\\String\\', array($phpDir . 'Symfony/Component/String'));
+$loader->setPsr4('Symfony\\Contracts\\Service\\', array($phpDir . 'Symfony/Contracts/Service'));
 $loader->setPsr4('Symfony\\Polyfill\\Php73\\', array($phpDir . 'Symfony/Polyfill/Php73'));
 $loader->setPsr4('Symfony\\Polyfill\\Php80\\', array($phpDir . 'Symfony/Polyfill/Php80'));
 $loader->setPsr4('Symfony\\Polyfill\\Php81\\', array($phpDir . 'Symfony/Polyfill/Php81'));

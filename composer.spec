@@ -11,7 +11,7 @@
 Summary:	Dependency Manager for PHP
 Name:		composer
 Version:	2.9.5
-Release:	1
+Release:	2
 License:	MIT
 Group:		Development/Languages/PHP
 Source0:	https://github.com/composer/composer/archive/%{version}/%{name}-%{version}.tar.gz
@@ -64,6 +64,8 @@ Requires:	php-symfony-Console >= 5.4.47
 Requires:	php-symfony-Filesystem >= 5.4.45
 Requires:	php-symfony-Finder >= 5.4.45
 Requires:	php-symfony-Process >= 5.4.47
+Requires:	php-symfony-ServiceContracts >= 2.5
+Requires:	php-symfony-String >= 5.4
 Requires:	unzip
 Suggests:	bash-completion-%{name}
 Suggests:	git-core
