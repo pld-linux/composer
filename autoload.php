@@ -1,5 +1,5 @@
 <?php
-$phpDir = defined('PHP_DATADIR') && PHP_DATADIR ? PHP_DATADIR . '/php/' : '/usr/share/php/';
+$phpDir = '/usr/share/php/';
 
 require_once __DIR__ . '/Autoload/ClassLoader.php';
 

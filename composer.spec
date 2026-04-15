@@ -11,7 +11,7 @@
 Summary:	Dependency Manager for PHP
 Name:		composer
 Version:	2.9.5
-Release:	2
+Release:	3
 License:	MIT
 Group:		Development/Languages/PHP
 Source0:	https://github.com/composer/composer/archive/%{version}/%{name}-%{version}.tar.gz
