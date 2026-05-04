@@ -17,6 +17,7 @@ $loader->setPsr4('Composer\\Semver\\', array($phpDir . 'Composer/Semver'));
 $loader->setPsr4('Composer\\Spdx\\', array($phpDir . 'Composer/Spdx'));
 $loader->setPsr4('Composer\\XdebugHandler\\', array($phpDir . 'Composer/XdebugHandler'));
 $loader->setPsr4('JsonSchema\\', array($phpDir . 'JsonSchema'));
+$loader->setPsr4('MabeEnum\\', array($phpDir . 'MabeEnum'));
 $loader->setPsr4('Psr\\Log\\', array($phpDir . 'Psr/Log'));
 $loader->setPsr4('React\\Promise\\', array($phpDir . 'React/Promise'));
 $loader->setPsr4('Seld\\JsonLint\\', array($phpDir . 'Seld/JsonLint'));

@@ -11,7 +11,7 @@
 Summary:	Dependency Manager for PHP
 Name:		composer
 Version:	2.9.5
-Release:	3
+Release:	4
 License:	MIT
 Group:		Development/Languages/PHP
 Source0:	https://github.com/composer/composer/archive/%{version}/%{name}-%{version}.tar.gz
@@ -55,6 +55,7 @@ Requires:	php-composer-semver >= 3.3
 Requires:	php-composer-spdx-licenses >= 1.5.7
 Requires:	php-composer-xdebug-handler >= 2.0.2
 Requires:	php-justinrainbow-json-schema >= 6.5.1
+Requires:	php-marc-mabe-php-enum >= 4.0
 Requires:	php-psr-log >= 1.0
 Requires:	php-react-promise >= 3.3
 Requires:	php-seld-jsonlint >= 1.4
