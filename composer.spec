@@ -10,12 +10,12 @@
 %define		php_min_version 7.2.5
 Summary:	Dependency Manager for PHP
 Name:		composer
-Version:	2.9.5
-Release:	4
+Version:	2.10.2
+Release:	1
 License:	MIT
 Group:		Development/Languages/PHP
 Source0:	https://github.com/composer/composer/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	db62f452564f8042d8206919f9edaf2b
+# Source0-md5:	9b9798e1af708337080dd412e6171aff
 Source2:	https://raw.githubusercontent.com/iArren/%{name}-bash-completion/86a8129/composer
 # Source2-md5:	cdeebf0a0da1fd07d0fd886d0461642e
 Source3:	autoload.php
