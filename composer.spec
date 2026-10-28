@@ -1,6 +1,5 @@
 #
 # Conditional build:
-%bcond_with	tests		# build with tests
 %bcond_with	online		# online self-test
 
 %if 0%{?_pld_builder:1}
@@ -10,27 +9,23 @@
 %define		php_min_version 7.2.5
 Summary:	Dependency Manager for PHP
 Name:		composer
-Version:	2.10.2
+Version:	2.10.3
 Release:	1
 License:	MIT
 Group:		Development/Languages/PHP
 Source0:	https://github.com/composer/composer/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	9b9798e1af708337080dd412e6171aff
+# Source0-md5:	ee742fb3f7deca7a211e9394f154ce67
+# vendor/ installed from upstream composer.lock, as in the official phar;
+# regenerate with ./update-source.sh [version]
+Source1:	%{name}-vendor-%{version}.tar.xz
+# Source1-md5:	cfb1c7633fede80fbd1b13742bce8fa4
 Source2:	https://raw.githubusercontent.com/iArren/%{name}-bash-completion/86a8129/composer
 # Source2-md5:	cdeebf0a0da1fd07d0fd886d0461642e
-Source3:	autoload.php
-Patch0:		autoload.patch
 URL:		https://getcomposer.org/
 BuildRequires:	php-devel
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.673
 %{?with_online:BuildRequires:	%{php_name}-cli}
-%if %{with tests}
-BuildRequires:	composer >= 2.0.0
-BuildRequires:	git-core
-BuildRequires:	phpab
-BuildRequires:	phpunit >= 4.8
-%endif
 Requires:	php(core) >= %{php_min_version}
 Requires:	php(ctype)
 Requires:	php(date)
@@ -47,26 +42,6 @@ Requires:	php(simplexml)
 Requires:	php(spl)
 Requires:	php(zip)
 Requires:	php(zlib)
-Requires:	php-composer-ca-bundle >= 1.5
-Requires:	php-composer-class-map-generator >= 1.4.0
-Requires:	php-composer-metadata-minifier >= 1.0
-Requires:	php-composer-pcre >= 2.3
-Requires:	php-composer-semver >= 3.3
-Requires:	php-composer-spdx-licenses >= 1.5.7
-Requires:	php-composer-xdebug-handler >= 2.0.2
-Requires:	php-justinrainbow-json-schema >= 6.5.1
-Requires:	php-marc-mabe-php-enum >= 4.0
-Requires:	php-psr-log >= 1.0
-Requires:	php-react-promise >= 3.3
-Requires:	php-seld-jsonlint >= 1.4
-Requires:	php-seld-phar-utils >= 1.2
-Requires:	php-seld-signal-handler >= 2.0
-Requires:	php-symfony-Console >= 5.4.47
-Requires:	php-symfony-Filesystem >= 5.4.45
-Requires:	php-symfony-Finder >= 5.4.45
-Requires:	php-symfony-Process >= 5.4.47
-Requires:	php-symfony-ServiceContracts >= 2.5
-Requires:	php-symfony-String >= 5.4
 Requires:	unzip
 Suggests:	bash-completion-%{name}
 Suggests:	git-core
@@ -96,23 +71,10 @@ Bash completion for Composer package and dependency manager.
 Pakiet ten dostarcza bashowe uzupełnianie nazw dla Composera.
 
 %prep
-%setup -q
-%patch -P0 -p1
+%setup -q -a1
 
-mv composer.lock{,.disabled}
 # NOTE: do not use %{__php} macro here, need unversioned php binary
-%{__sed} -i -e '1s,^#!.*env php,#!/usr/bin/php,' bin/*
-
-cp -p %{SOURCE3} src/Composer/autoload.php
-
-# AutoloadGenerator needs this runtime
-mv LICENSE res
-# move to Composer dir, this will simplify testing
-mv res src/Composer
-ln -s src/Composer/res
-
-# cleanup backups after patching
-find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
+%{__sed} -i -e '1s,^#!.*env php,#!/usr/bin/php,' bin/composer
 
 %build
 %if %{with online}
@@ -120,17 +82,17 @@ find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 %{__php} ./bin/composer diagnose
 %endif
 
-%if %{with tests}
-phpab -n -o src/bootstrap.php -e '*/Fixtures/*' src/ tests/
-echo "require 'src/Composer/autoload.php';" >> src/bootstrap.php
-phpunit
-%endif
-
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{php_data_dir}/Composer,/var/cache/composer}
-cp -a src/Composer $RPM_BUILD_ROOT%{php_data_dir}
-install -p bin/composer $RPM_BUILD_ROOT%{_bindir}/%{name}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}/bin,%{php_data_dir}/Composer,/var/cache/composer}
+# AutoloadGenerator copies LICENSE from the top of the tree into generated autoloaders
+cp -a LICENSE res src vendor $RPM_BUILD_ROOT%{_datadir}/%{name}
+install -p bin/composer $RPM_BUILD_ROOT%{_datadir}/%{name}/bin
+# command line tools of the bundled libraries, composer does not run them
+%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/%{name}/vendor/{bin,justinrainbow/json-schema/bin,seld/jsonlint/bin}
+ln -s %{_datadir}/%{name}/bin/composer $RPM_BUILD_ROOT%{_bindir}/%{name}
+# library autoloader for compatibility (satis)
+ln -s %{_datadir}/%{name}/vendor/autoload.php $RPM_BUILD_ROOT%{php_data_dir}/Composer/autoload.php
 
 install -d $RPM_BUILD_ROOT%{bash_compdir}
 cp -p %{SOURCE2} $RPM_BUILD_ROOT%{bash_compdir}/composer
@@ -140,9 +102,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc src/Composer/res/LICENSE
 %attr(755,root,root) %{_bindir}/composer
-%{php_data_dir}/Composer
+%dir %{_datadir}/%{name}
+%dir %{_datadir}/%{name}/bin
+%attr(755,root,root) %{_datadir}/%{name}/bin/composer
+%{_datadir}/%{name}/LICENSE
+%{_datadir}/%{name}/res
+%{_datadir}/%{name}/src
+%{_datadir}/%{name}/vendor
+%dir %{php_data_dir}/Composer
+%{php_data_dir}/Composer/autoload.php
 
 # top level cachedir, create user cache dirs here manually
 %dir %attr(711,root,http) /var/cache/composer
